@@ -1,546 +1,176 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Приглашение на свадьбу | Дмитрий & Альбина Горюновы</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+        <title>Приглашение на свадьбу | Дмитрий & Альбина Горюновы</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Шапка -->
+            <section class="hero">
+                <div class="wedding-names">Дмитрий <span class="ampersand">&</span> Альбина</div>
+                <div class="invite-sub">Приглашают вас на свадьбу</div>
 
-        body {
-            background: #f5ede5;
-            font-family: 'Cormorant Garamond', serif;
-            color: #2c241b;
-            line-height: 1.5;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #ffffff;
-            box-shadow: 0 0 50px rgba(0,0,0,0.05);
-            position: relative;
-            min-height: 100vh;
-        }
-
-        section {
-            padding: 60px 24px;
-            border-bottom: 1px solid #f0e5dc;
-            text-align: center;
-        }
-
-        /* Hero секция с именами жениха/невесты */
-        .hero {
-            padding-top: 80px;
-            padding-bottom: 50px;
-            background: linear-gradient(135deg, #fffaf5 0%, #ffffff 100%);
-        }
-
-        .wedding-names {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.2rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #9b3e26;
-            margin-bottom: 16px;
-        }
-
-        .ampersand {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 2.5rem;
-        }
-
-        .greeting-block {
-            margin-top: 30px;
-            padding: 20px;
-            background: #fef6ef;
-            border-radius: 60px;
-            display: inline-block;
-            width: auto;
-            max-width: 90%;
-        }
-
-        #guestGreeting {
-            font-size: 1.5rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 500;
-            color: #b85c3a;
-            line-height: 1.3;
-        }
-
-        .invite-sub {
-            font-size: 1.1rem;
-            margin-top: 16px;
-            color: #6b5340;
-        }
-
-        /* Карточка приглашения */
-        .invitation-card {
-            background: #fef9f2;
-            border-radius: 32px;
-            padding: 44px 24px;
-            margin-top: 10px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-        }
-
-        .invitation-card h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #9b3e26;
-            margin-bottom: 24px;
-        }
-
-        .invite-text-main {
-            font-size: 1.2rem;
-            font-style: italic;
-            margin: 20px 0;
-            line-height: 1.6;
-        }
-
-        .couple-surname {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin: 25px 0 10px;
-            letter-spacing: 2px;
-            color: #3a2a1f;
-        }
-
-        .event-details {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        }
-
-        .date {
-            font-size: 1.4rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: #9b3e26;
-            margin: 10px 0;
-        }
-
-        .location {
-            font-size: 1.1rem;
-            color: #5e4333;
-        }
-
-        /* Список всех гостей (справочно) */
-        .guest-list-section {
-            background: #ffffff;
-        }
-
-        .guest-list-title {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .guest-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            text-align: left;
-            max-height: 320px;
-            overflow-y: auto;
-            background: #fefaf7;
-            padding: 16px;
-            border-radius: 28px;
-            font-size: 1rem;
-        }
-
-        .guest-item {
-            display: flex;
-            gap: 12px;
-            border-bottom: 1px solid #f0e2d8;
-            padding: 8px 4px;
-        }
-
-        .guest-id {
-            font-weight: bold;
-            color: #b35f46;
-            width: 45px;
-        }
-
-        .guest-names-list {
-            color: #2c241b;
-        }
-
-        /* Кнопка RSVP */
-        .rsvp-btn {
-            background: #9b3e26;
-            color: white;
-            border: none;
-            padding: 14px 36px;
-            font-size: 1.2rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 600;
-            border-radius: 50px;
-            margin-top: 20px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 12px rgba(155,62,38,0.25);
-        }
-
-        .rsvp-btn:active {
-            transform: scale(0.96);
-            background: #7a2f1c;
-        }
-
-        /* СЕРДЦЕ-СКРОЛЛ (фишка) */
-        .heart-scroll {
-            position: fixed;
-            bottom: 24px;
-            right: 20px;
-            width: 58px;
-            height: 58px;
-            background-color: #ecd9cd;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
-            transition: all 0.1s ease;
-            cursor: pointer;
-        }
-
-        .heart-icon {
-            font-size: 32px;
-            transition: 0.2s;
-        }
-
-        .heart-scroll.filled {
-            background: #e85d4a;
-            box-shadow: 0 0 20px rgba(232,93,74,0.6);
-        }
-
-        .scroll-tip {
-            position: fixed;
-            bottom: 100px;
-            right: 28px;
-            background: rgba(0,0,0,0.65);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-family: monospace;
-            pointer-events: none;
-            opacity: 0;
-            transition: 0.3s;
-            white-space: nowrap;
-            z-index: 999;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 0.85rem;
-            color: #b29c8a;
-            background: #fcf9f5;
-        }
-
-        @media (max-width: 600px) {
-            section {
-                padding: 50px 20px;
-            }
-            .wedding-names {
-                font-size: 2.4rem;
-            }
-            #guestGreeting {
-                font-size: 1.25rem;
-            }
-            .heart-scroll {
-                width: 48px;
-                height: 48px;
-            }
-            .heart-icon {
-                font-size: 26px;
-            }
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    
-    <!-- Шапка: Имена молодоженов и приветствие для конкретного гостя -->
-    <section class="hero">
-        <div class="wedding-names">
-            Дмитрий <span class="ampersand">&</span> Альбина
-        </div>
-        <div class="invite-sub">Приглашают вас на свадьбу</div>
-        
-        <div class="greeting-block">
-            <div id="guestGreeting">✨ Загрузка... ✨</div>
-        </div>
-    </section>
-
-    <!-- Основной текст приглашения -->
-    <section>
-        <div class="invitation-card">
-            <h2>❤️ Сердечно приглашаем ❤️</h2>
-            <div class="invite-text-main">
-                Мы очень хотим разделить этот счастливый день с вами — нашими близкими и дорогими людьми.
-                Пусть этот вечер станет наполнен теплом, уютом и искренней радостью!
-            </div>
-            <div class="couple-surname">Дмитрий и Альбина ГОРЮНОВЫ</div>
-            <div class="event-details">
-                <div class="date">15 июня 2025 года</div>
-                <div class="location">🌿 Рестон «Усадьба. Поляна сказок» 🌿<br>Сбор гостей в 15:00</div>
-            </div>
-            <div style="font-size: 0.95rem; margin-top: 15px; color: #8b6b55;">
-                Просим вас быть в этот день с нами
-            </div>
-        </div>
-    </section>
-
-    <!-- Блок со списком гостей (для ориентации по ID) -->
-    <section class="guest-list-section">
-        <div class="guest-list-title">📖 Наши гости (номера)</div>
-        <div class="guest-grid" id="fullGuestList">
-            <!-- список подставится через JS -->
-        </div>
-    </section>
-
-    <!-- Кнопка подтверждения -->
-    <section>
-        <button class="rsvp-btn" id="rsvpButton">📌 Подтвердить присутствие</button>
-        <p style="margin-top: 20px; font-size: 0.85rem;">Пожалуйста, сообщите до 1 мая</p>
-    </section>
-    
-    <footer>
-        С любовью, Дмитрий и Альбина Горюновы
-    </footer>
-</div>
-
-<!-- Фишка: сердце -->
-<div class="heart-scroll" id="heartScroll">
-    <div class="heart-icon">❤️</div>
-</div>
-<div class="scroll-tip" id="scrollTip">💖 скролл наполняет сердце</div>
-
-<script>
-    // ==============================================================
-    // БАЗА ГОСТЕЙ (полностью по твоему списку, с номерами)
-    // Каждый номер — массив имён (для пары или одного)
-    // ==============================================================
-    const guestsDB = {
-        1: ["Светлана", "Виталий"],
-        2: ["Котова Анастасия"],
-        3: ["Александр", "Кристина"],
-        4: ["Любовь Григорьевна"],
-        5: ["Елена", "Леонид"],
-        6: ["Наталья", "Александр"],
-        7: ["Юлия", "Александр"],
-        8: ["Роман", "Виктория"],
-        9: ["Антон", "Мария"],
-        10: ["Юля Александрова"],
-        11: ["Симухин Назарий"],
-        12: ["Анастасия", "Александр"],
-        13: ["Антонина", "Иван"],
-        14: ["Виктория", "Андрей"],
-        15: ["Валерия", "Александр"],
-        16: ["Елена", "Максим"],
-        17: ["Вадим", "Галина"],
-        18: ["Ксения"],
-        19: ["Наталья"],
-        20: ["Людмила"],
-        21: ["Денис", "Анастасия"],
-        22: ["Сергей", "Кристина"],
-        24: ["Татьяна", "Андрей"],
-        25: ["Кристина горюнова"],
-        26: ["Настя горюнова"],
-        27: ["Евгений", "Александра"],
-        28: ["Валерия"],
-        29: ["Леонид", "Галина"],
-        30: ["Сергей", "Светлана"],
-        31: ["Александр", "Дарья"],
-        32: ["Никита"],
-        33: ["Павел", "Анастасия"],
-        34: ["Александр Ежков"],
-        35: ["Кирилл", "Софья"],
-        36: ["Денис", "Дарья"],
-        37: ["Павел", "Анастасия"],
-        38: ["Никита"]
-    };
-
-    // Функция определения пола по имени (базовая, для склонения "дорогой/дорогая")
-    function detectGender(name) {
-        const femaleMarkers = ['а', 'я', 'ия', 'ья'];
-        const lowerName = name.toLowerCase();
-        // Исключения (мужские имена, заканчивающиеся на "а"): Никита, Саша и тд
-        const maleExceptions = ['николай', 'никита', 'саша', 'женя', 'валентин', 'илья'];
-        for (let ex of maleExceptions) {
-            if (lowerName.includes(ex)) return 'male';
-        }
-        // Женские окончания
-        for (let marker of femaleMarkers) {
-            if (lowerName.endsWith(marker)) return 'female';
-        }
-        // Если имя типа "Светлана" - жен; "Александр" - муж
-        if (lowerName === 'александр' || lowerName === 'виталий' || lowerName === 'леонид' || lowerName === 'роман' || lowerName === 'антон' || lowerName === 'денис' || lowerName === 'сергей' || lowerName === 'андрей' || lowerName === 'максим' || lowerName ==='вадим' || lowerName ==='кирилл' || lowerName ==='павел' || lowerName ==='евгений' || lowerName ==='иван') return 'male';
-        
-        return 'female'; // по умолчанию женский, если сомнения — корректируется вручную
-    }
-
-    // ГЛАВНАЯ ФУНКЦИЯ: формирует обращение "Дорогой/Дорогая/Дорогие Имя"
-    function formatGreeting(namesArray) {
-        if (!namesArray || namesArray.length === 0) return "Дорогой гость!";
-        
-        if (namesArray.length === 1) {
-            const name = namesArray[0];
-            const gender = detectGender(name);
-            const prefix = gender === 'male' ? 'Дорогой' : 'Дорогая';
-            return `${prefix} ${name}!`;
-        }
-        else if (namesArray.length === 2) {
-            return `Дорогие ${namesArray[0]} и ${namesArray[1]}!`;
-        }
-        else {
-            // На случай если больше двух (редкость)
-            const allNames = namesArray.join(', ');
-            return `Дорогие ${allNames}!`;
-        }
-    }
-
-    // Получить гостя из URL (guestId)
-    function getGuestFromURL() {
-        const params = new URLSearchParams(window.location.search);
-        const guestIdParam = params.get('guestId');
-        if (guestIdParam && !isNaN(parseInt(guestIdParam))) {
-            const id = parseInt(guestIdParam);
-            if (guestsDB[id]) {
-                return { id: id, names: guestsDB[id] };
-            }
-        }
-        return null;
-    }
-
-    // Вывести обращение на страницу
-    function renderGreeting() {
-        const guestData = getGuestFromURL();
-        const greetingDiv = document.getElementById('guestGreeting');
-        if (guestData) {
-            const greetingText = formatGreeting(guestData.names);
-            greetingDiv.innerHTML = `✨ ${greetingText} ✨`;
-        } else {
-            // Если нет guestId или он не найден — общее приглашение
-            greetingDiv.innerHTML = `✨ Дорогие наши гости! ✨`;
-        }
-    }
-
-    // Отрисовать полный список гостей (для справки)
-    function renderFullGuestList() {
-        const container = document.getElementById('fullGuestList');
-        if (!container) return;
-        const sortedIds = Object.keys(guestsDB).map(Number).sort((a,b) => a-b);
-        let html = '';
-        for (let id of sortedIds) {
-            const names = guestsDB[id];
-            const namesStr = names.join(' & ');
-            html += `
-                <div class="guest-item">
-                    <div class="guest-id">${id}</div>
-                    <div class="guest-names-list">${namesStr}</div>
+                <div class="greeting-block">
+                    <div id="guestGreeting">✨ Загрузка... ✨</div>
                 </div>
-            `;
-        }
-        container.innerHTML = html;
-    }
+            </section>
 
-    // ========== СЕРДЦЕ ПРИ СКРОЛЛЕ ==========
-    const heartEl = document.getElementById('heartScroll');
-    const tipEl = document.getElementById('scrollTip');
-    
-    function updateHeartByScroll() {
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (scrollHeight <= 0) {
-            heartEl.classList.add('filled');
-            return;
-        }
-        const scrolled = window.scrollY;
-        const percent = scrolled / scrollHeight;
-        // Сердце заполняется при 65% прокрутки
-        if (percent >= 0.65) {
-            heartEl.classList.add('filled');
-        } else {
-            heartEl.classList.remove('filled');
-        }
-        // слегка пульсируем размером
-        const scale = 1 + (Math.min(percent, 0.7) * 0.08);
-        heartEl.style.transform = `scale(${scale})`;
-    }
+            <!-- Основное приглашение -->
+            <section>
+                <div class="invitation-card">
+                    <h2>❤️ Сердечно приглашаем ❤️</h2>
+                    <div class="invite-text-main">
+                        Мы очень хотим разделить этот счастливый день с вами — нашими близкими и дорогими людьми. Пусть этот вечер станет наполнен теплом, уютом
+                        и искренней радостью!
+                    </div>
+                    <div class="couple-surname">Дмитрий и Альбина ГОРЮНОВЫ</div>
+                    <div class="event-details">
+                        <div class="date">10 июля 2026 года</div>
+                        <div class="location">🌿 Рестон «Усадьба. Поляна сказок» 🌿<br />Сбор гостей в 16:00</div>
+                    </div>
+                </div>
+            </section>
 
-    let tipShown = false;
-    function handleScrollTip() {
-        if (!tipShown && window.scrollY > 30) {
-            tipEl.style.opacity = '0.85';
-            setTimeout(() => {
-                tipEl.style.opacity = '0';
-            }, 2200);
-            tipShown = true;
-        }
-        updateHeartByScroll();
-    }
+            <!-- ТАЙМЕР -->
+            <section class="timer-section">
+                <div class="timer-title">⏳ До нашей свадьбы осталось</div>
+                <div class="timer" id="timer">
+                    <div class="timer-block">
+                        <div class="timer-number" id="days">00</div>
+                        <div class="timer-label">дней</div>
+                    </div>
+                    <div class="timer-block">
+                        <div class="timer-number" id="hours">00</div>
+                        <div class="timer-label">часов</div>
+                    </div>
+                    <div class="timer-block">
+                        <div class="timer-number" id="minutes">00</div>
+                        <div class="timer-label">минут</div>
+                    </div>
+                    <div class="timer-block">
+                        <div class="timer-number" id="seconds">00</div>
+                        <div class="timer-label">секунд</div>
+                    </div>
+                </div>
+                <div class="event-time">10 июля 2026 года, начало в 16:00</div>
+            </section>
 
-    // Кнопка RSVP — ответ
-    function setupRSVP() {
-        const btn = document.getElementById('rsvpButton');
-        btn.addEventListener('click', () => {
-            const guestData = getGuestFromURL();
-            if (guestData) {
-                let names = guestData.names;
-                let namesText = names.join(' и ');
-                alert(`💒 Спасибо, ${namesText}! Очень ждём вас на нашей свадьбе! 💒`);
-            } else {
-                alert(`💒 Спасибо! Очень ждём вас на нашей свадьбе! 💒`);
-            }
-        });
-    }
+            <!-- Наша история -->
+            <section class="story-section">
+                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem; color: #9b3e26">📖 Наша история</h2>
+                <div class="heart-divider">❤️</div>
+                <div class="story-text">
+                    Наша история началась не случайно — словно сама судьба свела нас вместе.<br /><br />
+                    Дмитрий и Альбина: два сердца, которые бились в унисон с первой встречи. Мы прошли через радости и испытания, но любовь стала нашей главной
+                    опорой. И теперь мы хотим разделить самое важное обещание друг другу в кругу самых родных людей.<br /><br />
+                    Спасибо, что вы с нами в этот день ❤️
+                </div>
+            </section>
 
-    // Добавим красивый эффект, если гость найден
-    function highlightIfGuestExists() {
-        const guest = getGuestFromURL();
-        if (guest) {
-            const block = document.querySelector('.greeting-block');
-            if (block) {
-                block.style.transition = '0.3s';
-                block.style.boxShadow = '0 0 0 2px #ecc9b5';
-                setTimeout(() => {
-                    block.style.boxShadow = 'none';
-                }, 600);
-            }
-        }
-    }
+            <!-- Фотогалерея -->
+            <section class="gallery-section">
+                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem; color: #9b3e26">📸 Мгновения счастья</h2>
+                <div class="heart-divider">❤️</div>
+                <div class="gallery-grid">
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <div class="emoji">📷❤️</div>
+                            <div>Тут будет фото</div>
+                            <div style="font-size: 0.8rem">Дмитрий и Альбина</div>
+                        </div>
+                        <div class="photo-caption">Наша первая встреча — тот самый момент</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <div class="emoji">💍✨</div>
+                            <div>Тут будет фото</div>
+                            <div style="font-size: 0.8rem">Предложение руки и сердца</div>
+                        </div>
+                        <div class="photo-caption">Самое заветное «Да!» и это кольцо</div>
+                    </div>
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <div class="emoji">🌹🥂</div>
+                            <div>Тут будет фото</div>
+                            <div style="font-size: 0.8rem">Прогулка по любимому городу</div>
+                        </div>
+                        <div class="photo-caption">Наши счастливые дни вместе</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 1.1rem; color: #b0856a">Совсем скоро появятся новые фотографии с нашей свадьбы!</p>
+            </section>
 
-    // инициализация
-    function init() {
-        renderGreeting();
-        renderFullGuestList();
-        setupRSVP();
-        highlightIfGuestExists();
-        
-        window.addEventListener('scroll', handleScrollTip);
-        window.addEventListener('resize', updateHeartByScroll);
-        updateHeartByScroll();
-        
-        // подсказка при загрузке, если не скроллили
-        setTimeout(() => {
-            if (window.scrollY < 10) {
-                tipEl.style.opacity = '0.6';
-                setTimeout(() => { if(tipEl.style.opacity !== '0') tipEl.style.opacity = '0'; }, 2800);
-            }
-        }, 800);
-    }
-    
-    init();
-</script>
-</body>
+            <!-- ТОНКИЕ НАМЁКИ (подарки, дресс-код, цветы) -->
+            <section>
+                <div class="invitation-card" style="background: #fef5ed">
+                    <h2>✨ О важном, но без лишнего пафоса ✨</h2>
+                    <div class="story-text" style="font-style: normal">
+                        <p>
+                            🥂 <strong>Что касается подарков…</strong> Мы люди простые и практичные. Если вы вдруг начнёте ломать голову над вопросом «что же
+                            подарить», позвольте вас мягко направить: самый лучший подарок — тот, который помогает строить совместное будущее. Говорят, что
+                            конверты отлично летают и не бьются. А ещё они очень нравятся молодым семьям 😉
+                        </p>
+
+                        <div class="heart-divider">🍷</div>
+
+                        <p>
+                            🎩 <strong>Дресс-код?</strong> А давайте без него! Мы хотим видеть вас такими, какие вы есть — красивыми, настоящими и счастливыми.
+                            Единственное пожелание: чтобы вам было комфортно танцевать до упаду.
+                        </p>
+
+                        <div class="heart-divider">💐</div>
+
+                        <p>
+                            🌹 <strong>Про цветы и не только.</strong> Знаете, у цветов есть одна особенность — они прекрасны, но очень недолговечны. А вот
+                            хорошее вино… Оно с годами становится только лучше. Поэтому, если у вас возникнет желание порадовать нас, мы с огромной теплотой
+                            примем бутылочку благородного напитка. За наше счастливое будущее мы поднимем бокалы вместе с вами!
+                        </p>
+
+                        <p style="margin-top: 25px; font-style: italic">Главное — это вы рядом. Остальное — приятные мелочи ❤️</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Пожелания для молодоженов -->
+            <section class="wishes-section">
+                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem; color: #9b3e26">💌 Тёплые пожелания</h2>
+                <div class="heart-divider">❤️</div>
+                <div class="story-text">
+                    Дорогие гости, мы будем очень рады, если вы оставите свои искренние пожелания для нас. Каждое слово согреет наши сердца в этот важный день!
+                </div>
+                <textarea rows="3" class="wish-input" id="wishInput" placeholder="Напишите тёплые слова..."></textarea>
+                <button class="send-wish-btn" id="sendWishBtn">✨ Отправить пожелание ✨</button>
+                <div id="wishFeedback" style="margin-top: 15px; font-size: 0.85rem; color: #9b6e54"></div>
+            </section>
+
+            <!-- Список гостей -->
+            <!-- <section class="guest-list-section">
+        <div class="guest-list-title">📖 Наши гости (номера)</div>
+        <div class="guest-grid" id="fullGuestList"></div>
+    </section> -->
+
+            <!-- RSVP -->
+            <section>
+                <button class="rsvp-btn" id="rsvpButton">📌 Подтвердить присутствие</button>
+                <p style="margin-top: 20px; font-size: 1rem">Пожалуйста, сообщите до 1 июня 2026</p>
+            </section>
+
+            <footer>С любовью, Дмитрий и Альбина Горюновы</footer>
+        </div>
+
+        <!-- Сердце-скролл -->
+        <div class="heart-scroll" id="heartScroll">
+            <div class="heart-icon">❤️</div>
+        </div>
+        <div class="scroll-tip" id="scrollTip">💖 скролл наполняет сердце</div>
+
+        <script src="index.js"></script>
+    </body>
 </html>
