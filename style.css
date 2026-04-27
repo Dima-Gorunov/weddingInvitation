@@ -339,31 +339,33 @@ section {
     background: #7a2f1c;
 }
 
-/* Сердце-скролл */
+/* Сердце-скролл — плавное заполнение */
 .heart-scroll {
+    pointer-events: none;
     position: fixed;
     bottom: 24px;
     right: 20px;
     width: 58px;
     height: 58px;
-    background-color: #ecd9cd;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     z-index: 1000;
-    transition: all 0.1s ease;
-    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+    /* Градиент будет меняться через JS */
+    background: #ecd9cd;
 }
 
 .heart-icon {
     font-size: 32px;
+    pointer-events: none;
     transition: 0.2s;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
 }
 
 .heart-scroll.filled {
-    background: #e85d4a;
     box-shadow: 0 0 20px rgba(232, 93, 74, 0.6);
 }
 

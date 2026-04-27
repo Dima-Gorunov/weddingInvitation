@@ -120,7 +120,7 @@ function renderFullGuestList() {
 
 // ================== ТАЙМЕР ДО 10.07.2026 16:00 ==================
 function updateTimer() {
-    const targetDate = new Date(2026, 6, 10, 16, 0, 0); // Июль = 6 (0-индекс)
+    const targetDate = new Date(2026, 6, 10, 16, 0, 0);
     const now = new Date();
     const diff = targetDate - now;
 
@@ -146,21 +146,55 @@ function updateTimer() {
 setInterval(updateTimer, 1000);
 updateTimer();
 
-// Сердце при скролле
+// ========== ПЛАВНОЕ ЗАПОЛНЕНИЕ СЕРДЦА ПРИ СКРОЛЛЕ ==========
 const heartEl = document.getElementById("heartScroll");
 const tipEl = document.getElementById("scrollTip");
 
+function getColorByPercent(percent) {
+    // Начальный цвет: #ecd9cd (236, 217, 205)
+    const startR = 236,
+        startG = 217,
+        startB = 205;
+    // Конечный цвет: #e85d4a (232, 93, 74)
+    const endR = 232,
+        endG = 93,
+        endB = 74;
+
+    const p = Math.min(1, Math.max(0, percent));
+
+    const r = Math.round(startR + (endR - startR) * p);
+    const g = Math.round(startG + (endG - startG) * p);
+    const b = Math.round(startB + (endB - startB) * p);
+
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 function updateHeartByScroll() {
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+
     if (scrollHeight <= 0) {
+        heartEl.style.background = "#e85d4a";
         heartEl.classList.add("filled");
         return;
     }
+
     const scrolled = window.scrollY;
-    const percent = scrolled / scrollHeight;
-    if (percent >= 0.65) heartEl.classList.add("filled");
-    else heartEl.classList.remove("filled");
-    const scale = 1 + Math.min(percent, 0.7) * 0.08;
+    let percent = scrolled / scrollHeight;
+    console.log('percent: ', percent);
+    
+    let test=percent*100
+    // Плавно меняем цвет фона
+    heartEl.style.background = getColorByPercent(percent);
+    // heartEl.style.clipPath = `polygon(0.00% ${100-test}%,100.00% ${100-test}%,100.00% 100%,0.00% 100%)`;
+
+    if (percent >= 0.95) {
+        heartEl.classList.add("filled");
+    } else {
+        heartEl.classList.remove("filled");
+    }
+
+    // Лёгкое изменение размера (пульсация)
+    const scale = 1 + Math.min(percent, 0.7) * 0.1;
     heartEl.style.transform = `scale(${scale})`;
 }
 
@@ -174,6 +208,7 @@ function handleScrollTip() {
     updateHeartByScroll();
 }
 
+// ========== ОСТАЛЬНЫЕ ФУНКЦИИ ==========
 function setupRSVP() {
     const btn = document.getElementById("rsvpButton");
     btn.addEventListener("click", () => {
