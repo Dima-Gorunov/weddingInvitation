@@ -249,9 +249,8 @@ function highlightIfGuestExists() {
     if (guest) {
         const block = document.querySelector(".greeting-block");
         if (block) {
-            block.style.transition = "0.3s";
+            block.style.transition = "1s";
             block.style.boxShadow = "0 0 0 2px #ecc9b5";
-            setTimeout(() => (block.style.boxShadow = "none"), 600);
         }
     }
 }
