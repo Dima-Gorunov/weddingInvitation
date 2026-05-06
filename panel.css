@@ -1,0 +1,215 @@
+/* Мини-превью для карточек тем */
+.mini-preview {
+    width: 160px;
+    height: 120px;
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+}
+
+.mini-card {
+    height: 100%;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mini-title {
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Playfair Display", serif;
+}
+
+.mini-heart {
+    font-size: 12px;
+}
+
+.mini-date {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.mini-btn {
+    width: 60px;
+    height: 24px;
+    border-radius: 20px;
+    margin-top: 4px;
+}
+
+/* Обновлённые стили панели */
+#themePanel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+    transition: 0.3s ease;
+}
+
+#themePanel.hidden {
+    display: none;
+}
+
+.theme-panel-content {
+    background: white;
+    border-radius: 40px;
+    padding: 36px 32px;
+    max-width: 850px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.theme-panel-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #8b2e1a;
+    margin-bottom: 32px;
+}
+
+.theme-options {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.theme-option {
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s ease;
+    padding: 12px;
+    border-radius: 24px;
+    background: #f9f9f9;
+}
+
+.theme-option:hover {
+    transform: translateY(-6px);
+}
+
+.theme-option.selected {
+    background: #f0e0d0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.theme-option.selected .mini-preview {
+    transform: scale(1.02);
+}
+
+.theme-name {
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: "Cormorant Garamond", serif;
+    color: #2c2418;
+}
+
+.theme-close-btn {
+    background: linear-gradient(135deg, #c47a5a, #a85c3e);
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.2s;
+}
+
+.theme-close-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(168, 92, 62, 0.4);
+}
+
+/* Кнопка смены темы (плавающая) */
+#themeSwitcherBtn {
+    position: fixed;
+    bottom: 100px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: 0.2s;
+    z-index: 999;
+    border: 2px solid #e8d5c4;
+}
+
+#themeSwitcherBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* Адаптация под мобильные */
+@media (max-width: 700px) {
+    .mini-preview {
+        width: 130px;
+        height: 100px;
+        padding: 8px;
+    }
+
+    .mini-card {
+        padding: 6px;
+    }
+
+    .mini-title {
+        font-size: 11px;
+    }
+
+    .mini-date {
+        font-size: 9px;
+    }
+
+    .mini-btn {
+        width: 45px;
+        height: 18px;
+    }
+
+    .theme-panel-content {
+        padding: 24px 20px;
+    }
+
+    .theme-panel-title {
+        font-size: 1.4rem;
+    }
+
+    .theme-options {
+        gap: 14px;
+    }
+}
