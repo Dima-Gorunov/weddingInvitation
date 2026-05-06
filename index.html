@@ -10,11 +10,443 @@
         />
         <link rel="stylesheet" href="style.css" />
         <link rel="stylesheet" href="panel.css" />
+
+        <!-- Дополнительные стили для новых элементов -->
+        <style>
+            /* Круговые фоны, выходящие за пределы контейнера */
+            .circle-bg {
+                position: fixed;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            .circle-bg-1 {
+                width: 500px;
+                height: 500px;
+                top: -200px;
+                left: -200px;
+                background: radial-gradient(circle, rgba(210, 180, 140, 0.15), rgba(210, 180, 140, 0));
+            }
+
+            .circle-bg-2 {
+                width: 600px;
+                height: 600px;
+                bottom: -250px;
+                right: -250px;
+                background: radial-gradient(circle, rgba(176, 133, 106, 0.12), rgba(176, 133, 106, 0));
+            }
+
+            .circle-bg-3 {
+                width: 350px;
+                height: 350px;
+                top: 40%;
+                left: -120px;
+                background: radial-gradient(circle, rgba(210, 180, 140, 0.1), rgba(210, 180, 140, 0));
+            }
+
+            /* Стрелки между блоками */
+            .scroll-arrow {
+                text-align: center;
+                margin: 15px 0 25px;
+                animation: bounce 2s infinite;
+                cursor: pointer;
+                position: relative;
+                z-index: 2;
+            }
+
+            .scroll-arrow span {
+                display: inline-block;
+                font-size: 32px;
+                color: #b0856a;
+                opacity: 0.7;
+                transition: opacity 0.3s;
+            }
+
+            .scroll-arrow span:hover {
+                opacity: 1;
+            }
+
+            @keyframes bounce {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(8px);
+                }
+            }
+
+            /* Блок с фоновым изображением */
+            .photo-bg-block {
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+                overflow: hidden;
+                margin: 30px 0;
+            }
+
+            .photo-bg-block::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+            }
+
+            .photo-bg-block .invitation-card {
+                background: transparent;
+                box-shadow: none;
+                position: relative;
+                z-index: 2;
+            }
+
+            .photo-bg-block .invitation-card h2,
+            .photo-bg-block .invitation-card .story-text p,
+            .photo-bg-block .invitation-card .story-text {
+                color: white;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            .photo-bg-block .heart-divider {
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            /* Стили для анимированных фото в hero */
+            .hero {
+                position: relative;
+                overflow: visible;
+                min-height: 500px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* Общие стили для всех floating фото */
+            .floating-photo {
+                position: absolute;
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+                opacity: 0;
+                z-index: 10;
+                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+                cursor: pointer;
+            }
+
+            .floating-photo img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                position: absolute;
+            }
+
+            .floating-photo::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, rgba(210, 180, 140, 0.2), rgba(176, 133, 106, 0.1));
+                pointer-events: none;
+            }
+
+            /* Hero фото */
+            .floating-photo-left {
+                width: 140px;
+                height: 140px;
+                left: -100px;
+                bottom: -100px;
+                transform: rotate(-12deg) scale(0.8);
+            }
+
+            .floating-photo-left.photo-visible {
+                left: 5%;
+                bottom: 10%;
+                transform: rotate(-8deg) scale(1);
+                opacity: 1;
+            }
+
+            .floating-photo-right {
+                width: 140px;
+                height: 140px;
+                right: -100px;
+                top: -100px;
+                transform: rotate(12deg) scale(0.8);
+            }
+
+            .floating-photo-right.photo-visible {
+                right: 5%;
+                top: 10%;
+                transform: rotate(8deg) scale(1);
+                opacity: 1;
+            }
+
+            /* Секция истории - маленькие фото */
+            .story-floating-photo {
+                position: absolute;
+                width: 90px;
+                height: 90px;
+                border-radius: 15px;
+                opacity: 0;
+                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+                z-index: 5;
+            }
+
+            .story-photo-1 {
+                left: -50px;
+                top: 20%;
+                transform: rotate(-15deg) scale(0.7);
+            }
+
+            .story-photo-1.photo-visible {
+                left: 2%;
+                top: 0%;
+                transform: rotate(-10deg) scale(1);
+                opacity: 1;
+            }
+
+            .story-photo-2 {
+                right: -50px;
+                top: 90%;
+                transform: rotate(15deg) scale(0.7);
+            }
+
+            .story-photo-2.photo-visible {
+                right: 2%;
+                top: 90%;
+                transform: rotate(10deg) scale(1);
+                opacity: 1;
+            }
+
+            /* Секция галереи - средние фото */
+            .gallery-floating-photo {
+                position: absolute;
+                width: 110px;
+                height: 110px;
+                border-radius: 18px;
+                opacity: 0;
+                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+                z-index: 5;
+            }
+
+            .gallery-photo-1 {
+                left: -60px;
+                top: 15%;
+                transform: rotate(-20deg) scale(0.6);
+            }
+
+            .gallery-photo-1.photo-visible {
+                left: 0%;
+                transform: rotate(-12deg) scale(1);
+                opacity: 1;
+            }
+
+            .gallery-photo-2 {
+                right: -60px;
+                bottom: 15%;
+                transform: rotate(20deg) scale(0.6);
+            }
+
+            .gallery-photo-2.photo-visible {
+                right: 0%;
+                transform: rotate(12deg) scale(1);
+                opacity: 1;
+            }
+
+            /* Секция пожеланий - маленькие фото */
+            .wishes-floating-photo {
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                border-radius: 12px;
+                opacity: 0;
+                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+                z-index: 5;
+            }
+
+            .wishes-photo-1 {
+                left: -40px;
+                top: 30%;
+                transform: rotate(-10deg) scale(0.7);
+            }
+
+            .wishes-photo-1.photo-visible {
+                left: 3%;
+                top: 0%;
+                transform: rotate(-5deg) scale(1);
+                opacity: 1;
+            }
+
+            .wishes-photo-2 {
+                right: -40px;
+                bottom: 30%;
+                transform: rotate(10deg) scale(0.7);
+            }
+
+            .wishes-photo-2.photo-visible {
+                right: 3%;
+                top: 0%;
+                transform: rotate(5deg) scale(1);
+                opacity: 1;
+            }
+
+            /* Секция таймера - большие фото */
+            .timer-floating-photo {
+                position: absolute;
+                width: 130px;
+                height: 130px;
+                border-radius: 22px;
+                opacity: 0;
+                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+                z-index: 5;
+            }
+
+            .timer-photo-1 {
+                left: -70px;
+                top: 10%;
+                transform: rotate(-25deg) scale(0.5);
+            }
+
+            .timer-photo-1.photo-visible {
+                left: 3%;
+                top: 13%;
+                transform: rotate(-15deg) scale(1);
+                opacity: 1;
+            }
+
+            .timer-photo-2 {
+                right: -70px;
+                bottom: 10%;
+                transform: rotate(25deg) scale(0.5);
+            }
+
+            .timer-photo-2.photo-visible {
+                right: 5%;
+                top: 56%;
+                transform: rotate(15deg) scale(1);
+                opacity: 1;
+            }
+
+            /* Адаптация для мобильных */
+            @media (max-width: 768px) {
+                .floating-photo-left,
+                .floating-photo-right {
+                    width: 100px;
+                    height: 100px;
+                }
+                .floating-photo-left {
+                    left: 10%;
+                }
+                .floating-photo-right {
+                    right: 10%;
+                }
+
+                .story-floating-photo {
+                    width: 65px;
+                    height: 65px;
+                }
+
+                .gallery-floating-photo {
+                    width: 80px;
+                    height: 80px;
+                }
+
+                .wishes-floating-photo {
+                    width: 60px;
+                    height: 60px;
+                }
+
+                .timer-floating-photo {
+                    width: 90px;
+                    height: 90px;
+                }
+
+                .hero {
+                    min-height: 450px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .floating-photo-left,
+                .floating-photo-right {
+                    width: 75px;
+                    height: 75px;
+                }
+
+                .hero {
+                    min-height: 400px;
+                }
+            }
+
+            /* Улучшаем отображение основного контента */
+            .container {
+                position: relative;
+                z-index: 1;
+            }
+
+            section {
+                position: relative;
+                z-index: 2;
+                overflow: visible;
+            }
+
+            .story-section,
+            .gallery-section,
+            .timer-section,
+            .wishes-section {
+                overflow: visible;
+            }
+
+            .wedding-names {
+                position: relative;
+                z-index: 15;
+                background: rgba(255, 255, 255, 0.85);
+                display: inline-block;
+                padding: 15px 30px;
+                border-radius: 60px;
+                backdrop-filter: blur(5px);
+                margin: 20px auto;
+            }
+
+            .greeting-block {
+                position: relative;
+                z-index: 15;
+            }
+
+            .invite-sub {
+                position: relative;
+                z-index: 15;
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(3px);
+                padding: 8px 20px;
+                border-radius: 40px;
+            }
+        </style>
     </head>
     <body>
+        <!-- Круговые фоны за пределами контейнера -->
+        <div class="circle-bg circle-bg-1"></div>
+        <div class="circle-bg circle-bg-2"></div>
+        <div class="circle-bg circle-bg-3"></div>
+
         <div class="container">
-            <!-- Шапка -->
+            <!-- Шапка с анимированными фото -->
             <section class="hero">
+                <!-- Анимированные фото -->
+                <div class="floating-photo floating-photo-left" id="photoLeft">
+                    <img src="./images/photo4.jpg" alt="Дмитрий" onerror="this.src = 'https://via.placeholder.com/140x140?text=Дмитрий'" />
+                </div>
+                <div class="floating-photo floating-photo-right" id="photoRight">
+                    <img src="./images/photo5.jpg" alt="Альбина" onerror="this.src = 'https://via.placeholder.com/140x140?text=Альбина'" />
+                </div>
+
                 <div class="greeting-block">
                     <div id="guestGreeting">✨ Загрузка... ✨</div>
                 </div>
@@ -24,23 +456,121 @@
 
             <!-- Основное приглашение -->
             <section>
-                <div class="invitation-card">
-                    <h2>❤️ Сердечно приглашаем ❤️</h2>
-                    <div class="invite-text-main">
-                        Мы очень хотим разделить этот счастливый день с вами — нашими близкими и дорогими людьми. Пусть этот вечер станет наполнен теплом, уютом
-                        и искренней радостью!
-                    </div>
-                    <div class="couple-surname">Дмитрий и Альбина ГОРЮНОВЫ</div>
-                    <div class="event-details">
-                        <div class="date">10 июля 2026 года</div>
-                        <div class="location">🌿 Рестон «Усадьба. Поляна сказок» 🌿<br />Сбор гостей в 16:00</div>
+                <div class="photo-bg-block" style="background-image: url(&quot;./images/photo3.jpg&quot;)">
+                    <div class="invitation-card">
+                        <h2>Сердечно приглашаем</h2>
+                        <div class="invite-text-main" style="color: white; font-weight: 500">
+                            Мы очень хотим разделить этот счастливый день с вами — нашими близкими и дорогими людьми. Пусть этот вечер станет наполнен теплом,
+                            уютом и искренней радостью!
+                        </div>
+                        <div class="couple-surname" style="color: white">Дмитрий и Альбина ГОРЮНОВЫ</div>
+                        <div class="event-details" style="color: white">
+                            <div class="date">10 июля 2026 года</div>
+                            <div class="location">Рестон «Усадьба. Поляна сказок»<br />Сбор гостей в 16:00</div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ТАЙМЕР -->
+            <!-- Стрелка между блоками -->
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
+                <span>▼</span>
+            </div>
+
+            <!-- Наша история с плавающими фото -->
+            <section class="story-section">
+                <div class="floating-photo floating-photo floating-photo-left story-photo-1" id="storyPhoto1">
+                    <img src="./images/photo6.jpg" alt="История 1" onerror="this.src = 'https://via.placeholder.com/90x90?text=❤️'" />
+                </div>
+                <div class="floating-photo floating-photo floating-photo-right story-photo-2" id="storyPhoto2">
+                    <img src="./images/photo7.jpg" alt="История 2" onerror="this.src = 'https://via.placeholder.com/90x90?text=💕'" />
+                </div>
+                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">Наша история</h2>
+                <div class="heart-divider">❤️</div>
+                <div class="story-text">
+                    Наша история началась не случайно — словно сама судьба свела нас вместе.<br /><br />
+                    Дмитрий и Альбина: два сердца, которые бились в унисон с первой встречи. Мы прошли через радости и испытания, но любовь стала нашей главной
+                    опорой. И теперь мы хотим разделить самое важное обещание друг другу в кругу самых родных людей.<br /><br />
+                    Спасибо, что вы с нами в этот день ❤️
+                </div>
+            </section>
+
+            <!-- Стрелка между блоками -->
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
+                <span>▼</span>
+            </div>
+
+            <!-- Фотогалерея с плавающими фото -->
+            <section class="gallery-section">
+                <div class="floating-photo floating-photo floating-photo-left gallery-photo-1" id="galleryPhoto1">
+                    <img src="./images/photo8.jpg" alt="Галерея 1" onerror="this.src = 'https://via.placeholder.com/110x110?text=📸'" />
+                </div>
+                <div class="floating-photo floating-photo floating-photo-right gallery-photo-2" id="galleryPhoto2">
+                    <img src="./images/photo9.jpg" alt="Галерея 2" onerror="this.src = 'https://via.placeholder.com/110x110?text=💑'" />
+                </div>
+                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">Мгновения счастья</h2>
+                <div class="heart-divider">❤️</div>
+                <div class="gallery-grid">
+                    <div class="photo-card">
+                        <div class="photo-placeholder">
+                            <div class="emoji">💍✨</div>
+                            <div>Тут будет фото</div>
+                            <div style="font-size: 0.8rem">Предложение руки и сердца</div>
+                        </div>
+                        <div class="photo-caption">Самое заветное «Да!» и это кольцо</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 1.1rem; color: #b0856a">Совсем скоро появятся новые фотографии с нашей свадьбы!</p>
+            </section>
+
+            <!-- Стрелка между блоками -->
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
+                <span>▼</span>
+            </div>
+
+            <div class="invitation-card">
+                <div class="floating-photo floating-photo floating-photo-left timer-photo-1" id="timerPhoto1">
+                    <img src="./images/photo10.jpg" alt="Таймер 1" onerror="this.src = 'https://via.placeholder.com/130x130?text=⏰'" />
+                </div>
+                <div class="floating-photo floating-photo floating-photo-right timer-photo-2" id="timerPhoto2">
+                    <img src="./images/photo11.jpg" alt="Таймер 2" onerror="this.src = 'https://via.placeholder.com/130x130?text=💒'" />
+                </div>
+                <h2>О важном, но без лишнего пафоса</h2>
+                <div class="story-text" style="font-style: normal">
+                    <p>
+                        <span class="dropcap-float" style="float: left; font-size: 11rem; line-height: 0.7; opacity: 0">м</span>
+                        <strong>Что касается подарков…</strong> Мы люди простые и практичные. Если вы вдруг начнёте ломать голову над вопросом «что же
+                        подарить», позвольте вас мягко направить: самый лучший подарок — тот, который помогает строить совместное будущее. Говорят, что конверты
+                        отлично летают и не бьются. А ещё они очень нравятся молодым семьям
+                    </p>
+
+                    <div class="heart-divider">🍷</div>
+
+                    <p>
+                        <strong>Дресс-код?</strong> А давайте без него! Мы хотим видеть вас такими, какие вы есть — красивыми, настоящими и счастливыми.
+                        Единственное пожелание: чтобы вам было комфортно танцевать до упаду.
+                    </p>
+
+                    <div class="heart-divider">💐</div>
+
+                    <p>
+                        <strong>Про цветы и не только.</strong> Знаете, у цветов есть одна особенность — они прекрасны, но очень недолговечны. А вот хорошее
+                        вино… Оно с годами становится только лучше. Поэтому, если у вас возникнет желание порадовать нас, мы с огромной теплотой примем
+                        бутылочку благородного напитка. За наше счастливое будущее мы поднимем бокалы вместе с вами!
+                    </p>
+
+                    <p style="margin-top: 25px; font-style: italic">Главное — это вы рядом. Остальное — приятные мелочи ❤️</p>
+                </div>
+            </div>
+
+            <!-- Стрелка между блоками -->
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
+                <span>▼</span>
+            </div>
+
+            <!-- ТАЙМЕР с плавающими фото -->
             <section class="timer-section">
-                <div class="timer-title">⏳ До нашей свадьбы осталось</div>
+                <div class="timer-title">До нашей свадьбы осталось</div>
                 <div class="timer" id="timer">
                     <div class="timer-block">
                         <div class="timer-number" id="days">00</div>
@@ -62,96 +592,32 @@
                 <div class="event-time">10 июля 2026 года, начало в 16:00</div>
             </section>
 
-            <!-- Наша история -->
-            <section class="story-section">
-                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">📖 Наша история</h2>
-                <div class="heart-divider">❤️</div>
-                <div class="story-text">
-                    Наша история началась не случайно — словно сама судьба свела нас вместе.<br /><br />
-                    Дмитрий и Альбина: два сердца, которые бились в унисон с первой встречи. Мы прошли через радости и испытания, но любовь стала нашей главной
-                    опорой. И теперь мы хотим разделить самое важное обещание друг другу в кругу самых родных людей.<br /><br />
-                    Спасибо, что вы с нами в этот день ❤️
-                </div>
-            </section>
+            <!-- Стрелка между блоками -->
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
+                <span>▼</span>
+            </div>
 
-            <!-- Фотогалерея -->
-            <section class="gallery-section">
-                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">📸 Мгновения счастья</h2>
-                <div class="heart-divider">❤️</div>
-                <div class="gallery-grid">
-                    <div class="photo-card">
-                        <div class="photo-placeholder">
-                            <div class="emoji">📷❤️</div>
-                            <div>Тут будет фото</div>
-                            <div style="font-size: 0.8rem">Дмитрий и Альбина</div>
-                        </div>
-                        <div class="photo-caption">Наша первая встреча — тот самый момент</div>
-                    </div>
-                    <div class="photo-card">
-                        <div class="photo-placeholder">
-                            <div class="emoji">💍✨</div>
-                            <div>Тут будет фото</div>
-                            <div style="font-size: 0.8rem">Предложение руки и сердца</div>
-                        </div>
-                        <div class="photo-caption">Самое заветное «Да!» и это кольцо</div>
-                    </div>
-                    <div class="photo-card">
-                        <div class="photo-placeholder">
-                            <div class="emoji">🌹🥂</div>
-                            <div>Тут будет фото</div>
-                            <div style="font-size: 0.8rem">Прогулка по любимому городу</div>
-                        </div>
-                        <div class="photo-caption">Наши счастливые дни вместе</div>
-                    </div>
-                </div>
-                <p style="margin-top: 20px; font-size: 1.1rem; color: #b0856a">Совсем скоро появятся новые фотографии с нашей свадьбы!</p>
-            </section>
-
-            <!-- ТОНКИЕ НАМЁКИ (подарки, дресс-код, цветы) -->
-            <section>
-                <div class="invitation-card">
-                    <h2>✨ О важном, но без лишнего пафоса ✨</h2>
-                    <div class="story-text" style="font-style: normal">
-                        <p>
-                            🥂 <strong>Что касается подарков…</strong> Мы люди простые и практичные. Если вы вдруг начнёте ломать голову над вопросом «что же
-                            подарить», позвольте вас мягко направить: самый лучший подарок — тот, который помогает строить совместное будущее. Говорят, что
-                            конверты отлично летают и не бьются. А ещё они очень нравятся молодым семьям 😉
-                        </p>
-
-                        <div class="heart-divider">🍷</div>
-
-                        <p>
-                            🎩 <strong>Дресс-код?</strong> А давайте без него! Мы хотим видеть вас такими, какие вы есть — красивыми, настоящими и счастливыми.
-                            Единственное пожелание: чтобы вам было комфортно танцевать до упаду.
-                        </p>
-
-                        <div class="heart-divider">💐</div>
-
-                        <p>
-                            🌹 <strong>Про цветы и не только.</strong> Знаете, у цветов есть одна особенность — они прекрасны, но очень недолговечны. А вот
-                            хорошее вино… Оно с годами становится только лучше. Поэтому, если у вас возникнет желание порадовать нас, мы с огромной теплотой
-                            примем бутылочку благородного напитка. За наше счастливое будущее мы поднимем бокалы вместе с вами!
-                        </p>
-
-                        <p style="margin-top: 25px; font-style: italic">Главное — это вы рядом. Остальное — приятные мелочи ❤️</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Пожелания для молодоженов -->
+            <!-- Пожелания для молодоженов с плавающими фото -->
             <section class="wishes-section">
-                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">💌 Тёплые пожелания</h2>
+                <div class="floating-photo floating-photo-left wishes-photo-1" id="wishesPhoto1">
+                    <img src="./images/photo12.jpg" alt="Пожелания 1" onerror="this.src = 'https://via.placeholder.com/80x80?text=💌'" />
+                </div>
+                <div class="floating-photo floating-photo-right wishes-photo-2" id="wishesPhoto2">
+                    <img src="./images/photo13.jpg" alt="Пожелания 2" onerror="this.src = 'https://via.placeholder.com/80x80?text=✨'" />
+                </div>
+                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">Тёплые пожелания</h2>
                 <div class="heart-divider">❤️</div>
                 <div class="story-text">
                     Дорогие гости, мы будем очень рады, если вы оставите свои искренние пожелания для нас. Каждое слово согреет наши сердца в этот важный день!
                 </div>
                 <textarea rows="3" class="wish-input" id="wishInput" placeholder="Напишите тёплые слова..."></textarea>
-                <button class="send-wish-btn" id="sendWishBtn">✨ Отправить пожелание ✨</button>
+                <button class="send-wish-btn" id="sendWishBtn">Отправить пожелание</button>
                 <div id="wishFeedback" style="margin-top: 15px; font-size: 0.85rem; color: #9b6e54"></div>
             </section>
+
             <!-- RSVP -->
             <section>
-                <button class="rsvp-btn" id="rsvpButton">📌 Подтвердить присутствие</button>
+                <button class="rsvp-btn" id="rsvpButton">Подтвердить присутствие</button>
                 <p style="margin-top: 20px; font-size: 1rem">Пожалуйста, сообщите до 1 июня 2026</p>
             </section>
 
@@ -162,9 +628,11 @@
         <div class="heart-scroll" id="heartScroll">
             <div class="heart-icon">❤️</div>
         </div>
-        <div class="scroll-tip" id="scrollTip">💖 скролл наполняет сердце</div>
+        <div class="scroll-tip" id="scrollTip">скролл наполняет сердце</div>
 
-        <script src="index.js"></script>
-        <script src="theme-picker.js"></script>
+        <script src="./js/index.js"></script>
+        <script src="./js/theme-picker.js"></script>
+        <script src="./js/scroll.js"></script>
+        <script src="./js/photoAnim.js"></script>
     </body>
 </html>

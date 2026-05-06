@@ -69,9 +69,12 @@
 .theme-panel-content {
     background: white;
     border-radius: 40px;
+    display: flex;
+    flex-direction: column;
     padding: 36px 32px;
     max-width: 850px;
     width: 90%;
+    max-height: 100%;
     text-align: center;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
     animation: slideUp 0.3s ease;
@@ -92,6 +95,7 @@
     font-family: "Playfair Display", serif;
     font-size: 1.8rem;
     font-weight: 700;
+    max-height: 250px;
     color: #8b2e1a;
     margin-bottom: 32px;
 }
@@ -99,6 +103,8 @@
 .theme-options {
     display: flex;
     gap: 24px;
+    flex: 1;
+    overflow: auto;
     justify-content: center;
     margin-bottom: 32px;
     flex-wrap: wrap;
@@ -144,6 +150,7 @@
     cursor: pointer;
     font-family: inherit;
     transition: 0.2s;
+    max-height: 100px;
 }
 
 .theme-close-btn:hover {
