@@ -5,572 +5,260 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
         <title>Приглашение на свадьбу | Дмитрий & Альбина Горюновы</title>
         <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="panel.css" />
-
-        <!-- Дополнительные стили для новых элементов -->
         <style>
-            /* Круговые фоны, выходящие за пределы контейнера */
-            .circle-bg {
-                position: fixed;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 0;
-            }
-
-            .circle-bg-1 {
-                width: 500px;
-                height: 500px;
-                top: -200px;
-                left: -200px;
-                background: radial-gradient(circle, rgba(210, 180, 140, 0.15), rgba(210, 180, 140, 0));
-            }
-
-            .circle-bg-2 {
-                width: 600px;
-                height: 600px;
-                bottom: -250px;
-                right: -250px;
-                background: radial-gradient(circle, rgba(176, 133, 106, 0.12), rgba(176, 133, 106, 0));
-            }
-
-            .circle-bg-3 {
-                width: 350px;
-                height: 350px;
-                top: 40%;
-                left: -120px;
-                background: radial-gradient(circle, rgba(210, 180, 140, 0.1), rgba(210, 180, 140, 0));
-            }
-
-            /* Стрелки между блоками */
-            .scroll-arrow {
-                text-align: center;
-                margin: 15px 0 25px;
-                animation: bounce 2s infinite;
-                cursor: pointer;
-                position: relative;
-                z-index: 2;
-            }
-
-            .scroll-arrow span {
-                display: inline-block;
-                font-size: 32px;
-                color: #b0856a;
-                opacity: 0.7;
-                transition: opacity 0.3s;
-            }
-
-            .scroll-arrow span:hover {
-                opacity: 1;
-            }
-
-            @keyframes bounce {
-                0%,
-                100% {
-                    transform: translateY(0);
-                }
-                50% {
-                    transform: translateY(8px);
-                }
-            }
-
-            /* Блок с фоновым изображением */
-            .photo-bg-block {
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                position: relative;
-                overflow: hidden;
-                margin: 30px 0;
-            }
-
-            .photo-bg-block::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.5);
-            }
-
-            .photo-bg-block .invitation-card {
-                background: transparent;
-                box-shadow: none;
-                position: relative;
-                z-index: 2;
-            }
-
-            .photo-bg-block .invitation-card h2,
-            .photo-bg-block .invitation-card .story-text p,
-            .photo-bg-block .invitation-card .story-text {
-                color: white;
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            }
-
-            .photo-bg-block .heart-divider {
-                color: rgba(255, 255, 255, 0.9);
-            }
-
-            /* Стили для анимированных фото в hero */
-            .hero {
-                position: relative;
-                overflow: visible;
-                min-height: 500px;
+            /* Дополнительные стили для кнопок соцсетей и подтверждения */
+            .rsvp-buttons-grid {
                 display: flex;
-                flex-direction: column;
+                flex-wrap: wrap;
                 justify-content: center;
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .social-rsvp-btn {
+                display: inline-flex;
                 align-items: center;
-            }
-
-            /* Общие стили для всех floating фото */
-            .floating-photo {
-                position: absolute;
-                border-radius: 20px;
-                overflow: hidden;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-                opacity: 0;
-                z-index: 10;
-                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
-                cursor: pointer;
-            }
-
-            .floating-photo img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                position: absolute;
-            }
-
-            .floating-photo::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(135deg, rgba(210, 180, 140, 0.2), rgba(176, 133, 106, 0.1));
-                pointer-events: none;
-            }
-
-            /* Hero фото */
-            .floating-photo-left {
-                width: 140px;
-                height: 140px;
-                left: -100px;
-                bottom: -100px;
-                transform: rotate(-12deg) scale(0.8);
-            }
-
-            .floating-photo-left.photo-visible {
-                left: 5%;
-                bottom: 10%;
-                transform: rotate(-8deg) scale(1);
-                opacity: 1;
-            }
-
-            .floating-photo-right {
-                width: 140px;
-                height: 140px;
-                right: -100px;
-                top: -100px;
-                transform: rotate(12deg) scale(0.8);
-            }
-
-            .floating-photo-right.photo-visible {
-                right: 5%;
-                top: 10%;
-                transform: rotate(8deg) scale(1);
-                opacity: 1;
-            }
-
-            /* Секция истории - маленькие фото */
-            .story-floating-photo {
-                position: absolute;
-                width: 90px;
-                height: 90px;
-                border-radius: 15px;
-                opacity: 0;
-                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
-                z-index: 5;
-            }
-
-            .story-photo-1 {
-                left: -50px;
-                top: 20%;
-                transform: rotate(-15deg) scale(0.7);
-            }
-
-            .story-photo-1.photo-visible {
-                left: 2%;
-                top: 0%;
-                transform: rotate(-10deg) scale(1);
-                opacity: 1;
-            }
-
-            .story-photo-2 {
-                right: -50px;
-                top: 90%;
-                transform: rotate(15deg) scale(0.7);
-            }
-
-            .story-photo-2.photo-visible {
-                right: 2%;
-                top: 90%;
-                transform: rotate(10deg) scale(1);
-                opacity: 1;
-            }
-
-            /* Секция галереи - средние фото */
-            .gallery-floating-photo {
-                position: absolute;
-                width: 110px;
-                height: 110px;
-                border-radius: 18px;
-                opacity: 0;
-                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
-                z-index: 5;
-            }
-
-            .gallery-photo-1 {
-                left: -60px;
-                top: 15%;
-                transform: rotate(-20deg) scale(0.6);
-            }
-
-            .gallery-photo-1.photo-visible {
-                left: 0%;
-                transform: rotate(-12deg) scale(1);
-                opacity: 1;
-            }
-
-            .gallery-photo-2 {
-                right: -60px;
-                bottom: 15%;
-                transform: rotate(20deg) scale(0.6);
-            }
-
-            .gallery-photo-2.photo-visible {
-                right: 0%;
-                transform: rotate(12deg) scale(1);
-                opacity: 1;
-            }
-
-            /* Секция пожеланий - маленькие фото */
-            .wishes-floating-photo {
-                position: absolute;
-                width: 80px;
-                height: 80px;
-                border-radius: 12px;
-                opacity: 0;
-                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
-                z-index: 5;
-            }
-
-            .wishes-photo-1 {
-                left: -40px;
-                top: 30%;
-                transform: rotate(-10deg) scale(0.7);
-            }
-
-            .wishes-photo-1.photo-visible {
-                left: 3%;
-                top: 0%;
-                transform: rotate(-5deg) scale(1);
-                opacity: 1;
-            }
-
-            .wishes-photo-2 {
-                right: -40px;
-                bottom: 30%;
-                transform: rotate(10deg) scale(0.7);
-            }
-
-            .wishes-photo-2.photo-visible {
-                right: 3%;
-                top: 0%;
-                transform: rotate(5deg) scale(1);
-                opacity: 1;
-            }
-
-            /* Секция таймера - большие фото */
-            .timer-floating-photo {
-                position: absolute;
-                width: 130px;
-                height: 130px;
-                border-radius: 22px;
-                opacity: 0;
-                transition: all 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
-                z-index: 5;
-            }
-
-            .timer-photo-1 {
-                left: -70px;
-                top: 10%;
-                transform: rotate(-25deg) scale(0.5);
-            }
-
-            .timer-photo-1.photo-visible {
-                left: 3%;
-                top: 13%;
-                transform: rotate(-15deg) scale(1);
-                opacity: 1;
-            }
-
-            .timer-photo-2 {
-                right: -70px;
-                bottom: 10%;
-                transform: rotate(25deg) scale(0.5);
-            }
-
-            .timer-photo-2.photo-visible {
-                right: 5%;
-                top: 56%;
-                transform: rotate(15deg) scale(1);
-                opacity: 1;
-            }
-
-            /* Адаптация для мобильных */
-            @media (max-width: 768px) {
-                .floating-photo-left,
-                .floating-photo-right {
-                    width: 100px;
-                    height: 100px;
-                }
-                .floating-photo-left {
-                    left: 10%;
-                }
-                .floating-photo-right {
-                    right: 10%;
-                }
-
-                .story-floating-photo {
-                    width: 65px;
-                    height: 65px;
-                }
-
-                .gallery-floating-photo {
-                    width: 80px;
-                    height: 80px;
-                }
-
-                .wishes-floating-photo {
-                    width: 60px;
-                    height: 60px;
-                }
-
-                .timer-floating-photo {
-                    width: 90px;
-                    height: 90px;
-                }
-
-                .hero {
-                    min-height: 450px;
-                }
-            }
-
-            @media (max-width: 480px) {
-                .floating-photo-left,
-                .floating-photo-right {
-                    width: 75px;
-                    height: 75px;
-                }
-
-                .hero {
-                    min-height: 400px;
-                }
-            }
-
-            /* Улучшаем отображение основного контента */
-            .container {
-                position: relative;
-                z-index: 1;
-            }
-
-            section {
-                position: relative;
-                z-index: 2;
-                overflow: visible;
-            }
-
-            .story-section,
-            .gallery-section,
-            .timer-section,
-            .wishes-section {
-                overflow: visible;
-            }
-
-            .wedding-names {
-                position: relative;
-                z-index: 15;
-                background: rgba(255, 255, 255, 0.85);
-                display: inline-block;
-                padding: 15px 30px;
+                justify-content: center;
+                gap: 0.6rem;
+                background: #1e1e1e;
+                color: white;
+                border: none;
+                padding: 0.9rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 500;
                 border-radius: 60px;
-                backdrop-filter: blur(5px);
-                margin: 20px auto;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                text-decoration: none;
+                font-family: "Inter", sans-serif;
+                min-width: 140px;
             }
 
-            .greeting-block {
-                position: relative;
-                z-index: 15;
+            .social-rsvp-btn:hover {
+                background: #000000;
+                transform: scale(0.98);
             }
 
-            .invite-sub {
-                position: relative;
-                z-index: 15;
-                background: rgba(255, 255, 255, 0.7);
-                backdrop-filter: blur(3px);
-                padding: 8px 20px;
-                border-radius: 40px;
+            .social-rsvp-btn.telegram {
+                background: #0088cc;
+            }
+            .social-rsvp-btn.telegram:hover {
+                background: #006699;
+            }
+
+            .social-rsvp-btn.whatsapp {
+                background: #25d366;
+            }
+            .social-rsvp-btn.whatsapp:hover {
+                background: #128c7e;
+            }
+
+            .social-rsvp-btn.vk {
+                background: #4c75a3;
+            }
+            .social-rsvp-btn.vk:hover {
+                background: #3a5d80;
+            }
+
+            .social-rsvp-btn.call {
+                background: #34a853;
+            }
+            .social-rsvp-btn.call:hover {
+                background: #2c8e47;
+            }
+
+            .social-icon {
+                font-size: 1.3rem;
+                font-weight: normal;
+            }
+
+            @media (max-width: 640px) {
+                .social-rsvp-btn {
+                    padding: 0.7rem 1.2rem;
+                    font-size: 0.9rem;
+                    min-width: 120px;
+                }
+                .social-icon {
+                    font-size: 1.1rem;
+                }
+            }
+
+            .info-text {
+                text-align: center;
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+                color: #5a5a5a;
+            }
+
+            /* Секция групповых чатов */
+            .group-chats-section {
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            .group-title {
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 1rem 0 0.8rem;
+                color: #3a3a3a;
+            }
+
+            .group-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+
+            .group-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                background: rgba(0, 0, 0, 0.75);
+                color: white;
+                border: none;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+                font-weight: 500;
+                border-radius: 60px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                text-decoration: none;
+                font-family: "Inter", sans-serif;
+            }
+
+            .group-btn:hover {
+                transform: scale(0.96);
+                background: #000;
+            }
+
+            .group-btn.telegram-group {
+                background: #0088cc;
+            }
+            .group-btn.whatsapp-group {
+                background: #25d366;
+            }
+            .group-btn.vk-group {
+                background: #4c75a3;
+            }
+
+            .call-buttons-row {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                margin: 1rem 0;
+            }
+
+            .call-person-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.6rem;
+                background: #2c3e50;
+                color: white;
+                border: none;
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+                font-weight: 500;
+                border-radius: 60px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                text-decoration: none;
+                font-family: "Inter", sans-serif;
+                min-width: 170px;
+            }
+
+            .call-person-btn:hover {
+                transform: scale(0.98);
+                filter: brightness(0.9);
+            }
+
+            .call-person-btn.groom {
+                background: #2c5f8a;
+            }
+            .call-person-btn.bride {
+                background: #8b5e6b;
             }
         </style>
     </head>
     <body>
-        <!-- Круговые фоны за пределами контейнера -->
-        <div class="circle-bg circle-bg-1"></div>
-        <div class="circle-bg circle-bg-2"></div>
-        <div class="circle-bg circle-bg-3"></div>
+        <div class="bg-layer"></div>
+        <!-- Несколько фоновых изображений чередуются или накладываются — создаём атмосферу чб фотографий природы/архитектуры -->
+        <div class="bg-image bg-image-1" style="opacity: 0.15"></div>
+        <div class="bg-image bg-image-2" style="opacity: 0.1"></div>
 
         <div class="container">
-            <!-- Шапка с анимированными фото -->
-            <section class="hero">
-                <!-- Анимированные фото -->
-                <div class="floating-photo floating-photo-left" id="photoLeft">
-                    <img src="./images/photo4.jpg" alt="Дмитрий" onerror="this.src = 'https://via.placeholder.com/140x140?text=Дмитрий'" />
-                </div>
-                <div class="floating-photo floating-photo-right" id="photoRight">
-                    <img src="./images/photo5.jpg" alt="Альбина" onerror="this.src = 'https://via.placeholder.com/140x140?text=Альбина'" />
-                </div>
-
-                <div class="greeting-block">
-                    <div id="guestGreeting">✨ Загрузка... ✨</div>
-                </div>
+            <!-- Hero с плавающими фото в ч/б стиле -->
+            <div class="hero-bw">
+                <div class="greeting-block" id="guestGreeting">✨ Дорогие гости ✨</div>
                 <div class="wedding-names">Дмитрий <span class="ampersand">&</span> Альбина</div>
                 <div class="invite-sub">Приглашают вас на свадьбу</div>
-            </section>
-
-            <!-- Основное приглашение -->
-            <section>
-                <div class="photo-bg-block" style="background-image: url(&quot;./images/photo3.jpg&quot;)">
-                    <div class="invitation-card">
-                        <h2>Сердечно приглашаем</h2>
-                        <div class="invite-text-main" style="color: white; font-weight: 500">
-                            Мы очень хотим разделить этот счастливый день с вами — нашими близкими и дорогими людьми. Пусть этот вечер станет наполнен теплом,
-                            уютом и искренней радостью!
-                        </div>
-                        <div class="couple-surname" style="color: white">Дмитрий и Альбина ГОРЮНОВЫ</div>
-                        <div class="event-details" style="color: white">
-                            <div class="date">10 июля 2026 года</div>
-                            <div class="location">Рестон «Усадьба. Поляна сказок»<br />Сбор гостей в 16:00</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Стрелка между блоками -->
-            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
-                <span>▼</span>
             </div>
 
-            <!-- Наша история с плавающими фото -->
-            <section class="story-section">
-                <div class="floating-photo floating-photo floating-photo-left story-photo-1" id="storyPhoto1">
-                    <img src="./images/photo6.jpg" alt="История 1" onerror="this.src = 'https://via.placeholder.com/90x90?text=❤️'" />
+            <!-- Блок с фоновым изображением (ч/б тонировка) -->
+            <div
+                class="photo-bg-block"
+                style="background-image: url(&quot;https://images.unsplash.com/photo-1522673607200-0fb9a2c3f87e?w=1200&auto=format&quot;)"
+            >
+                <div class="invitation-card">
+                    <h2>Сердечно приглашаем</h2>
+                    <div class="invite-text-main">
+                        Мы хотим разделить этот день с вами — нашими близкими. Пусть вечер наполнится теплом, искренностью и светлой радостью.
+                    </div>
+                    <div class="couple-surname">Дмитрий и Альбина ГОРЮНОВЫ</div>
+                    <div class="event-details">
+                        <div class="date">10 июля 2026</div>
+                        <div class="location">Рестон «Усадьба. Поляна сказок»<br />Сбор гостей в 16:00</div>
+                    </div>
                 </div>
-                <div class="floating-photo floating-photo floating-photo-right story-photo-2" id="storyPhoto2">
-                    <img src="./images/photo7.jpg" alt="История 2" onerror="this.src = 'https://via.placeholder.com/90x90?text=💕'" />
-                </div>
-                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">Наша история</h2>
-                <div class="heart-divider">❤️</div>
+            </div>
+
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 500, behavior: 'smooth' })">▼</div>
+
+            <!-- История - минималистично -->
+            <div class="card-bw story-section">
+                <h2>Наша история</h2>
+                <div class="heart-divider">✦</div>
                 <div class="story-text">
-                    Наша история началась не случайно — словно сама судьба свела нас вместе.<br /><br />
-                    Дмитрий и Альбина: два сердца, которые бились в унисон с первой встречи. Мы прошли через радости и испытания, но любовь стала нашей главной
-                    опорой. И теперь мы хотим разделить самое важное обещание друг другу в кругу самых родных людей.<br /><br />
-                    Спасибо, что вы с нами в этот день ❤️
+                    Два сердца, которые бьются в унисон. Наша любовь стала главной опорой, и теперь мы хотим дать самое важное обещание. Спасибо, что вы рядом в
+                    этот день.
                 </div>
-            </section>
-
-            <!-- Стрелка между блоками -->
-            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
-                <span>▼</span>
+                <div style="margin-top: 1rem; font-style: italic; font-weight: 300">10.07.2026</div>
             </div>
 
-            <!-- Фотогалерея с плавающими фото -->
-            <section class="gallery-section">
-                <div class="floating-photo floating-photo floating-photo-left gallery-photo-1" id="galleryPhoto1">
-                    <img src="./images/photo8.jpg" alt="Галерея 1" onerror="this.src = 'https://via.placeholder.com/110x110?text=📸'" />
-                </div>
-                <div class="floating-photo floating-photo floating-photo-right gallery-photo-2" id="galleryPhoto2">
-                    <img src="./images/photo9.jpg" alt="Галерея 2" onerror="this.src = 'https://via.placeholder.com/110x110?text=💑'" />
-                </div>
-                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">Мгновения счастья</h2>
-                <div class="heart-divider">❤️</div>
-                <div class="gallery-grid">
-                    <div class="photo-card">
-                        <div class="photo-placeholder">
-                            <div class="emoji">💍✨</div>
-                            <div>Тут будет фото</div>
-                            <div style="font-size: 0.8rem">Предложение руки и сердца</div>
-                        </div>
-                        <div class="photo-caption">Самое заветное «Да!» и это кольцо</div>
-                    </div>
-                </div>
-                <p style="margin-top: 20px; font-size: 1.1rem; color: #b0856a">Совсем скоро появятся новые фотографии с нашей свадьбы!</p>
-            </section>
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 500, behavior: 'smooth' })">▼</div>
 
-            <!-- Стрелка между блоками -->
-            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
-                <span>▼</span>
-            </div>
-
-            <div class="invitation-card">
-                <div class="floating-photo floating-photo floating-photo-left timer-photo-1" id="timerPhoto1">
-                    <img src="./images/photo10.jpg" alt="Таймер 1" onerror="this.src = 'https://via.placeholder.com/130x130?text=⏰'" />
-                </div>
-                <div class="floating-photo floating-photo floating-photo-right timer-photo-2" id="timerPhoto2">
-                    <img src="./images/photo11.jpg" alt="Таймер 2" onerror="this.src = 'https://via.placeholder.com/130x130?text=💒'" />
-                </div>
-                <h2>О важном, но без лишнего пафоса</h2>
-                <div class="story-text" style="font-style: normal">
+            <!-- Пожелания / подарки в минималистичном стиле -->
+            <div class="card-bw">
+                <h2>Без лишнего пафоса</h2>
+                <div class="story-text">
                     <p>
-                        <span class="dropcap-float" style="float: left; font-size: 11rem; line-height: 0.7; opacity: 0">м</span>
-                        <strong>Что касается подарков…</strong> Мы люди простые и практичные. Если вы вдруг начнёте ломать голову над вопросом «что же
-                        подарить», позвольте вас мягко направить: самый лучший подарок — тот, который помогает строить совместное будущее. Говорят, что конверты
-                        отлично летают и не бьются. А ещё они очень нравятся молодым семьям
+                        <strong>Что касается подарков…</strong> Главное — ваше внимание и тепло. Если захотите порадовать нас, конверты — отличный вариант для
+                        строительства совместного будущего. Они не бьются и окрыляют ❤️
                     </p>
-
                     <div class="heart-divider">🍷</div>
-
-                    <p>
-                        <strong>Дресс-код?</strong> А давайте без него! Мы хотим видеть вас такими, какие вы есть — красивыми, настоящими и счастливыми.
-                        Единственное пожелание: чтобы вам было комфортно танцевать до упаду.
-                    </p>
-
+                    <p><strong>Дресс-код?</strong> А давайте без него! Будьте собой, красивыми и настоящими. Главное — чтобы вам было комфортно и радостно.</p>
                     <div class="heart-divider">💐</div>
-
                     <p>
-                        <strong>Про цветы и не только.</strong> Знаете, у цветов есть одна особенность — они прекрасны, но очень недолговечны. А вот хорошее
-                        вино… Оно с годами становится только лучше. Поэтому, если у вас возникнет желание порадовать нас, мы с огромной теплотой примем
-                        бутылочку благородного напитка. За наше счастливое будущее мы поднимем бокалы вместе с вами!
+                        <strong>Про цветы и вино:</strong> Цветы прекрасны, но быстро вянут. Хорошее вино с годами становится лучше. Будем рады разделить с вами
+                        бокал за наше счастье!
                     </p>
-
-                    <p style="margin-top: 25px; font-style: italic">Главное — это вы рядом. Остальное — приятные мелочи ❤️</p>
+                    <p style="margin-top: 20px"><em>Вы рядом — это главный подарок.</em></p>
                 </div>
             </div>
 
-            <!-- Стрелка между блоками -->
-            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
-                <span>▼</span>
-            </div>
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 500, behavior: 'smooth' })">▼</div>
 
-            <!-- ТАЙМЕР с плавающими фото -->
-            <section class="timer-section">
-                <div class="timer-title">До нашей свадьбы осталось</div>
+            <!-- Таймер -->
+            <div class="card-bw timer-section">
+                <div class="timer-title" style="font-weight: 500; font-size: 1.4rem">До нашей свадьбы осталось</div>
                 <div class="timer" id="timer">
                     <div class="timer-block">
                         <div class="timer-number" id="days">00</div>
@@ -589,50 +277,187 @@
                         <div class="timer-label">секунд</div>
                     </div>
                 </div>
-                <div class="event-time">10 июля 2026 года, начало в 16:00</div>
-            </section>
-
-            <!-- Стрелка между блоками -->
-            <div class="scroll-arrow" onclick="window.scrollBy({ top: 450, behavior: 'smooth' })">
-                <span>▼</span>
+                <div class="event-time">10 июля 2026, начало в 16:00</div>
             </div>
 
-            <!-- Пожелания для молодоженов с плавающими фото -->
-            <section class="wishes-section">
-                <div class="floating-photo floating-photo-left wishes-photo-1" id="wishesPhoto1">
-                    <img src="./images/photo12.jpg" alt="Пожелания 1" onerror="this.src = 'https://via.placeholder.com/80x80?text=💌'" />
-                </div>
-                <div class="floating-photo floating-photo-right wishes-photo-2" id="wishesPhoto2">
-                    <img src="./images/photo13.jpg" alt="Пожелания 2" onerror="this.src = 'https://via.placeholder.com/80x80?text=✨'" />
-                </div>
-                <h2 style="font-family: &quot;Playfair Display&quot;, serif; font-size: 1.8rem">Тёплые пожелания</h2>
-                <div class="heart-divider">❤️</div>
-                <div class="story-text">
-                    Дорогие гости, мы будем очень рады, если вы оставите свои искренние пожелания для нас. Каждое слово согреет наши сердца в этот важный день!
-                </div>
-                <textarea rows="3" class="wish-input" id="wishInput" placeholder="Напишите тёплые слова..."></textarea>
-                <button class="send-wish-btn" id="sendWishBtn">Отправить пожелание</button>
-                <div id="wishFeedback" style="margin-top: 15px; font-size: 0.85rem; color: #9b6e54"></div>
-            </section>
+            <div class="scroll-arrow" onclick="window.scrollBy({ top: 500, behavior: 'smooth' })">▼</div>
 
-            <!-- RSVP -->
-            <section>
-                <button class="rsvp-btn" id="rsvpButton">Подтвердить присутствие</button>
-                <p style="margin-top: 20px; font-size: 1rem">Пожалуйста, сообщите до 1 июня 2026</p>
-            </section>
+            <!-- RSVP - БЛОК С КНОПКАМИ ПОДТВЕРЖДЕНИЯ, ЗВОНКОМ ЖЕНИХУ/НЕВЕСТЕ И ГРУППАМИ -->
+            <div class="card-bw" style="text-align: center">
+                <h2>Подтвердите присутствие</h2>
+                <div class="heart-divider">❤️</div>
+                <div class="info-text">Выберите удобный способ связи, чтобы сообщить нам о своём решении</div>
+
+                <!-- Существующие кнопки подтверждения -->
+                <div class="rsvp-buttons-grid" id="rsvpButtonsGrid">
+                    <a href="#" class="social-rsvp-btn telegram" id="telegramBtn"> <span class="social-icon">📱</span> Telegram </a>
+                    <a href="#" class="social-rsvp-btn whatsapp" id="whatsappBtn"> <span class="social-icon">💬</span> WhatsApp </a>
+                    <a href="#" class="social-rsvp-btn vk" id="vkBtn"> <span class="social-icon">📘</span> VK </a>
+                    <a href="#" class="social-rsvp-btn call" id="callBtn"> <span class="social-icon">📞</span> Позвонить </a>
+                </div>
+
+                <!-- НОВЫЕ КНОПКИ: Позвонить жениху и невесте -->
+                <div class="call-buttons-row">
+                    <a href="#" class="call-person-btn groom" id="callGroomBtn"> <span class="social-icon">👨‍💼</span> Позвонить жениху </a>
+                    <a href="#" class="call-person-btn bride" id="callBrideBtn"> <span class="social-icon">👰‍♀️</span> Позвонить невесте </a>
+                </div>
+
+                <!-- Общие группы в соцсетях -->
+                <div class="group-chats-section">
+                    <div class="group-title">📱 Вступить в общую группу</div>
+                    <div class="group-buttons">
+                        <a href="#" class="group-btn whatsapp-group" id="whatsappGroupBtn"> <span>💬</span> WhatsApp </a>
+                        <a href="#" class="group-btn telegram-group" id="telegramGroupBtn"> <span>📱</span> Telegram </a>
+                        <a href="#" class="group-btn vk-group" id="vkGroupBtn"> <span>📘</span> VK </a>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: #6a6a6a">Пожалуйста, сообщите до 1 июня 2026</p>
+            </div>
 
             <footer>С любовью, Дмитрий и Альбина Горюновы</footer>
         </div>
 
-        <!-- Сердце-скролл -->
         <div class="heart-scroll" id="heartScroll">
             <div class="heart-icon">❤️</div>
         </div>
         <div class="scroll-tip" id="scrollTip">скролл наполняет сердце</div>
 
-        <script src="./js/index.js"></script>
-        <script src="./js/theme-picker.js"></script>
-        <script src="./js/scroll.js"></script>
-        <script src="./js/photoAnim.js"></script>
+        <script src="newJs.js"></script>
+        <script>
+            // Полный скрипт для всех кнопок (подтверждение, звонки, группы)
+            (function () {
+                // ========== НАСТРОЙКИ (ЗАМЕНИТЕ НА СВОИ ДАННЫЕ) ==========
+                // Номера телефонов
+                const groomPhone = "+79123456789"; // Номер жениха (замените)
+                const bridePhone = "+79876543210"; // Номер невесты (замените)
+                const commonPhone = "+79123456789"; // Общий номер для общих чатов/связи
+
+                // Telegram
+                const groomTelegram = "DmitriyGoryunov"; // Username жениха
+                const brideTelegram = "AlbinaGoryunova"; // Username невесты
+                const commonTelegram = "GoryunovWedding"; // Общая группа/чат
+
+                // VK
+                const groomVk = "dmitriy_goryunov"; // ID или screen_name жениха
+                const brideVk = "albina_goryunova"; // ID или screen_name невесты
+                const commonVk = "club123456789"; // Группа/беседа
+
+                // WhatsApp группы/чаты
+                const groomWhatsApp = groomPhone;
+                const brideWhatsApp = bridePhone;
+                const commonWhatsAppGroup = "https://chat.whatsapp.com/yourinvitelink"; // Ссылка-приглашение в группу
+                // ========================================================
+
+                // Вспомогательная функция для очистки номера
+                function cleanPhone(phone) {
+                    return phone.replace(/[^0-9+]/g, "");
+                }
+
+                // ----- КНОПКИ ПОДТВЕРЖДЕНИЯ (существующие) -----
+                // Telegram
+                const telegramBtn = document.getElementById("telegramBtn");
+                if (telegramBtn) {
+                    telegramBtn.href = `https://t.me/${groomTelegram}`;
+                    telegramBtn.target = "_blank";
+                    telegramBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        window.open(`https://t.me/${groomTelegram}`, "_blank");
+                    });
+                }
+
+                // WhatsApp подтверждение
+                const whatsappBtn = document.getElementById("whatsappBtn");
+                if (whatsappBtn) {
+                    whatsappBtn.href = `https://wa.me/${cleanPhone(commonPhone)}`;
+                    whatsappBtn.target = "_blank";
+                    whatsappBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        window.open(`https://wa.me/${cleanPhone(commonPhone)}`, "_blank");
+                    });
+                }
+
+                // VK подтверждение
+                const vkBtn = document.getElementById("vkBtn");
+                if (vkBtn) {
+                    vkBtn.href = `https://vk.com/${groomVk}`;
+                    vkBtn.target = "_blank";
+                    vkBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        window.open(`https://vk.com/${groomVk}`, "_blank");
+                    });
+                }
+
+                // Общий звонок
+                const callBtn = document.getElementById("callBtn");
+                if (callBtn) {
+                    callBtn.href = `tel:${cleanPhone(commonPhone)}`;
+                    callBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        window.location.href = `tel:${cleanPhone(commonPhone)}`;
+                    });
+                }
+
+                // ----- НОВЫЕ КНОПКИ: ЗВОНОК ЖЕНИХУ И НЕВЕСТЕ -----
+                const callGroomBtn = document.getElementById("callGroomBtn");
+                if (callGroomBtn) {
+                    callGroomBtn.href = `tel:${cleanPhone(groomPhone)}`;
+                    callGroomBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        window.location.href = `tel:${cleanPhone(groomPhone)}`;
+                    });
+                }
+
+                const callBrideBtn = document.getElementById("callBrideBtn");
+                if (callBrideBtn) {
+                    callBrideBtn.href = `tel:${cleanPhone(bridePhone)}`;
+                    callBrideBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        window.location.href = `tel:${cleanPhone(bridePhone)}`;
+                    });
+                }
+
+                // ----- ОБЩИЕ ГРУППЫ -----
+                // WhatsApp группа
+                const whatsappGroupBtn = document.getElementById("whatsappGroupBtn");
+                if (whatsappGroupBtn) {
+                    whatsappGroupBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        if (commonWhatsAppGroup.includes("chat.whatsapp.com")) {
+                            window.open(commonWhatsAppGroup, "_blank");
+                        } else {
+                            // Если нет ссылки, предлагаем написать организаторам
+                            window.open(
+                                `https://wa.me/${cleanPhone(commonPhone)}?text=${encodeURIComponent("Здравствуйте! Хочу вступить в общую группу к свадьбе")}`,
+                                "_blank",
+                            );
+                        }
+                    });
+                }
+
+                // Telegram группа
+                const telegramGroupBtn = document.getElementById("telegramGroupBtn");
+                if (telegramGroupBtn) {
+                    telegramGroupBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        // Можно использовать ссылку-приглашение или username группы
+                        window.open(`https://t.me/${commonTelegram}`, "_blank");
+                    });
+                }
+
+                // VK группа
+                const vkGroupBtn = document.getElementById("vkGroupBtn");
+                if (vkGroupBtn) {
+                    vkGroupBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        let vkUrl = `https://vk.com/${commonVk}`;
+                        if (!commonVk.startsWith("club") && !commonVk.startsWith("public")) {
+                            vkUrl = `https://vk.com/${commonVk}`;
+                        }
+                        window.open(vkUrl, "_blank");
+                    });
+                }
+            })();
+        </script>
     </body>
 </html>
