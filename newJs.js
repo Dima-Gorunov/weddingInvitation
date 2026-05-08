@@ -103,21 +103,6 @@ function renderGreeting() {
     }
 }
 
-function renderFullGuestList() {
-    const container = document.getElementById("fullGuestList");
-    if (!container) return;
-    const sortedIds = Object.keys(guestsDB)
-        .map(Number)
-        .sort((a, b) => a - b);
-    let html = "";
-    for (let id of sortedIds) {
-        const names = guestsDB[id];
-        const namesStr = names.join(" & ");
-        html += `<div class="guest-item"><div class="guest-id">${id}</div><div class="guest-names-list">${namesStr}</div></div>`;
-    }
-    container.innerHTML = html;
-}
-
 // Таймер обратного отсчета
 function updateTimer() {
     const targetDate = new Date(2026, 6, 10, 16, 0, 0);
@@ -145,36 +130,6 @@ function updateTimer() {
 
 setInterval(updateTimer, 1000);
 updateTimer();
-
-// Отправка пожеланий
-const sendBtn = document.getElementById("sendWishBtn");
-const wishInput = document.getElementById("wishInput");
-const wishFeedback = document.getElementById("wishFeedback");
-
-if (sendBtn) {
-    sendBtn.addEventListener("click", () => {
-        const message = wishInput.value.trim();
-        if (message === "") {
-            wishFeedback.innerText = "❤️ Напишите несколько слов, пожалуйста.";
-            wishFeedback.style.color = "#8f5e3c";
-            return;
-        }
-        wishFeedback.innerText = "✨ Спасибо! Ваше пожелание достигло наших сердец. ✨";
-        wishFeedback.style.color = "#2c5a2c";
-        wishInput.value = "";
-        setTimeout(() => {
-            wishFeedback.innerText = "";
-        }, 3000);
-    });
-}
-
-// RSVP
-const rsvpBtn = document.getElementById("rsvpButton");
-if (rsvpBtn) {
-    rsvpBtn.addEventListener("click", () => {
-        alert("Благодарим за подтверждение! Мы будем ждать вас 10 июля 2026 ❤️");
-    });
-}
 
 // Сердце-скролл
 const heartScroll = document.getElementById("heartScroll");
@@ -302,3 +257,480 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 console.log("На странице используются ваши фото как декоративные фоновые элементы");
+
+// ========== АНИМАЦИИ ПРИ СКРОЛЛЕ ==========
+// Различные эффекты для блоков и текстов
+
+(function () {
+    // Ждем полной загрузки DOM
+    document.addEventListener("DOMContentLoaded", function () {
+        // Находим все элементы, которые будем анимировать
+        const animatedElements = [
+            // Основные блоки
+            ...document.querySelectorAll(".card-bw"),
+            ...document.querySelectorAll(".photo-bg-block"),
+            ...document.querySelectorAll(".hero-bw"),
+            // Текстовые элементы внутри блоков
+            ...document.querySelectorAll(".story-text p"),
+            ...document.querySelectorAll(".invite-text-main"),
+            ...document.querySelectorAll(".story-text"),
+            // Заголовки
+            ...document.querySelectorAll("h2"),
+            ...document.querySelectorAll(".wedding-names"),
+            ...document.querySelectorAll(".timer-title"),
+            // Таймер
+            ...document.querySelectorAll(".timer"),
+            // Кнопки и группы
+            // ...document.querySelectorAll(".rsvp-buttons-grid"),
+            // ...document.querySelectorAll(".call-buttons-row"),
+            // ...document.querySelectorAll(".group-buttons"),
+            // Дополнительные элементы
+            ...document.querySelectorAll(".heart-divider"),
+            ...document.querySelectorAll(".greeting-block"),
+            ...document.querySelectorAll(".invite-sub"),
+            ...document.querySelectorAll(".event-details"),
+            ...document.querySelectorAll("footer"),
+        ];
+
+        // Убираем дубликаты (если элемент попал несколько раз)
+        const uniqueElements = [...new Set(animatedElements)];
+
+        // Добавляем классы для анимации и изначально скрываем элементы
+        uniqueElements.forEach((el, index) => {
+            // Пропускаем если элемент уже имеет класс анимации
+            if (el.classList.contains("animated")) return;
+
+            // Добавляем базовый класс для анимации
+            el.classList.add("scroll-animated");
+
+            // Определяем тип анимации в зависимости от типа элемента
+            let animationType = "fadeInUp";
+
+            if (el.classList.contains("timer") || el.classList.contains("timer-section")) {
+                animationType = "scaleIn";
+            } else if (el.classList.contains("rsvp-buttons-grid") || el.classList.contains("group-buttons")) {
+                animationType = "staggerIn";
+            } else if (el.classList.contains("heart-divider")) {
+                animationType = "rotateIn";
+            } else if (el.tagName === "H2") {
+                animationType = "slideInLeft";
+            } else if (el.classList.contains("wedding-names")) {
+                animationType = "zoomIn";
+            } else if (el.classList.contains("story-text")) {
+                animationType = "fadeInRight";
+            } else if (el.classList.contains("photo-bg-block")) {
+                animationType = "fadeInScale";
+            } else {
+                animationType = "fadeInUp";
+            }
+
+            el.setAttribute("data-animation", animationType);
+            el.style.opacity = "0";
+            el.style.transform = "translateY(30px)";
+        });
+
+        // Добавляем стили анимаций в head
+        const styleSheet = document.createElement("style");
+        styleSheet.textContent = `
+            /* Базовые стили для анимируемых элементов */
+            .scroll-animated {
+                transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                will-change: transform, opacity;
+            }
+            
+            /* Анимация появления снизу */
+            .scroll-animated.fadeInUp {
+                animation: fadeInUpAnim 0.8s ease forwards;
+            }
+            
+            /* Анимация появления справа */
+            .scroll-animated.fadeInRight {
+                animation: fadeInRightAnim 0.8s ease forwards;
+            }
+            
+            /* Анимация появления с масштабом */
+            .scroll-animated.scaleIn {
+                animation: scaleInAnim 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+            }
+            
+            /* Анимация с вращением */
+            .scroll-animated.rotateIn {
+                animation: rotateInAnim 0.6s ease forwards;
+            }
+            
+            /* Анимация выезда слева */
+            .scroll-animated.slideInLeft {
+                animation: slideInLeftAnim 0.7s ease forwards;
+            }
+            
+            /* Анимация с зумом */
+            .scroll-animated.zoomIn {
+                animation: zoomInAnim 0.8s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+            }
+            
+            /* Анимация с масштабированием и прозрачностью */
+            .scroll-animated.fadeInScale {
+                animation: fadeInScaleAnim 0.9s ease forwards;
+            }
+            
+            /* Ключевые кадры анимаций */
+            @keyframes fadeInUpAnim {
+                0% {
+                    opacity: 0;
+                    transform: translateY(40px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes fadeInRightAnim {
+                0% {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes scaleInAnim {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            
+            @keyframes rotateInAnim {
+                0% {
+                    opacity: 0;
+                    transform: rotate(-10deg) scale(0.9);
+                }
+                100% {
+                    opacity: 1;
+                    transform: rotate(0) scale(1);
+                }
+            }
+            
+            @keyframes slideInLeftAnim {
+                0% {
+                    opacity: 0;
+                    transform: translateX(-40px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes zoomInAnim {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.5);
+                }
+                50% {
+                    opacity: 0.5;
+                    transform: scale(1.05);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            
+            @keyframes fadeInScaleAnim {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.9) translateY(20px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+            
+            /* Эффект пульсации для таймера при появлении */
+            @keyframes pulseGlow {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+                }
+                70% {
+                    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+                }
+            }
+            
+            .timer.scaleIn .timer-block {
+                animation: pulseGlow 0.6s ease-out;
+            }
+            
+            /* Задержки для последовательного появления кнопок */
+            .rsvp-buttons-grid.scroll-animated a,
+            .call-buttons-row.scroll-animated a,
+            .group-buttons.scroll-animated a {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.5s ease;
+            }
+            
+            .rsvp-buttons-grid.staggerIn a:nth-child(1) { transition-delay: 0.1s; }
+            .rsvp-buttons-grid.staggerIn a:nth-child(2) { transition-delay: 0.2s; }
+            .rsvp-buttons-grid.staggerIn a:nth-child(3) { transition-delay: 0.3s; }
+            .rsvp-buttons-grid.staggerIn a:nth-child(4) { transition-delay: 0.4s; }
+            
+            .call-buttons-row.staggerIn a:nth-child(1) { transition-delay: 0.15s; }
+            .call-buttons-row.staggerIn a:nth-child(2) { transition-delay: 0.3s; }
+            
+            .group-buttons.staggerIn a:nth-child(1) { transition-delay: 0.1s; }
+            .group-buttons.staggerIn a:nth-child(2) { transition-delay: 0.2s; }
+            .group-buttons.staggerIn a:nth-child(3) { transition-delay: 0.3s; }
+            
+            .rsvp-buttons-grid.staggerIn a,
+            .call-buttons-row.staggerIn a,
+            .group-buttons.staggerIn a {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // Функция проверки видимости элемента
+        function isElementInViewport(el, offset = 100) {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+            // Элемент считается видимым, если его верхняя граница выше нижней границы окна минус offset
+            // и нижняя граница выше верхней границы окна плюс offset
+            return rect.top < windowHeight - offset && rect.bottom > offset;
+        }
+
+        // Функция применения анимации к видимым элементам
+        function animateOnScroll() {
+            const elements = document.querySelectorAll(".scroll-animated");
+
+            elements.forEach((el) => {
+                // Пропускаем уже анимированные элементы
+                if (el.classList.contains("animated")) return;
+
+                // Проверяем видимость элемента
+                if (isElementInViewport(el, 120)) {
+                    const animationType = el.getAttribute("data-animation");
+
+                    // Добавляем класс анимации
+                    if (animationType) {
+                        el.classList.add(animationType);
+                    } else {
+                        el.classList.add("fadeInUp");
+                    }
+
+                    // Для кнопок с каскадной анимацией добавляем дополнительный класс
+                    if (animationType === "staggerIn") {
+                        el.classList.add("staggerIn");
+                        // Находим все дочерние ссылки и применяем к ним анимацию
+                        const links = el.querySelectorAll("a");
+                        links.forEach((link) => {
+                            link.style.opacity = "1";
+                            link.style.transform = "translateY(0)";
+                        });
+                    }
+
+                    // Добавляем эффект для таймера
+                    if (el.classList.contains("timer") && animationType === "scaleIn") {
+                        const blocks = el.querySelectorAll(".timer-block");
+                        blocks.forEach((block, idx) => {
+                            block.style.animation = `pulseGlow 0.6s ease-out ${idx * 0.1}s`;
+                        });
+                    }
+
+                    // Отмечаем элемент как анимированный
+                    el.classList.add("animated");
+
+                    // Добавляем небольшую задержку для текстов внутри блока
+                    if (el.classList.contains("story-text") || el.classList.contains("invite-text-main")) {
+                        const paragraphs = el.querySelectorAll("p");
+                        paragraphs.forEach((p, idx) => {
+                            p.style.animation = `fadeInUpAnim 0.5s ease forwards ${idx * 0.1}s`;
+                        });
+                    }
+                }
+            });
+        }
+
+        // Дополнительная анимация для отдельных слов в заголовках
+        function animateHeadings() {
+            const headings = document.querySelectorAll("h2, .wedding-names, .timer-title");
+
+            headings.forEach((heading) => {
+                if (heading.classList.contains("heading-animated")) return;
+
+                const text = heading.innerText;
+                const words = text.split(" ");
+
+                if (words.length > 1 && !heading.querySelector(".animated-word")) {
+                    heading.classList.add("heading-animated");
+                    heading.style.opacity = "0";
+
+                    // Создаем span для каждого слова
+                    const newHtml = words
+                        .map((word, idx) => {
+                            return `<span class="animated-word" style="display:inline-block; opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1) ${idx * 0.1}s">${word} </span>`;
+                        })
+                        .join("");
+
+                    // Сохраняем оригинальный HTML с тегами
+                    if (heading.querySelector("span.ampersand")) {
+                        // Для заголовка с амперсандом не применяем разбивку
+                        heading.classList.remove("heading-animated");
+                        heading.style.opacity = "";
+                    } else {
+                        heading.innerHTML = newHtml;
+                        heading.style.opacity = "1";
+                    }
+                }
+            });
+
+            // Анимируем слова при появлении заголовка
+            const headingObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const words = entry.target.querySelectorAll(".animated-word");
+                            words.forEach((word) => {
+                                word.style.opacity = "1";
+                                word.style.transform = "translateY(0)";
+                            });
+                            headingObserver.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.3 },
+            );
+
+            document.querySelectorAll(".heading-animated").forEach((heading) => {
+                headingObserver.observe(heading);
+            });
+        }
+
+        // Плавное появление фоновых изображений
+        function animateBackgroundElements() {
+            const bgElements = document.querySelectorAll(".bg-decor-photo, .bg-image");
+            bgElements.forEach((el, idx) => {
+                el.style.opacity = "0";
+                el.style.transition = `opacity 1s ease ${idx * 0.2}s`;
+                setTimeout(() => {
+                    el.style.opacity = el.classList.contains("bg-image") ? "0.15" : "0.4";
+                }, 100);
+            });
+        }
+
+        // Эффект параллакса для фоновых фото при скролле
+        function parallaxBackground() {
+            const scrollPosition = window.pageYOffset;
+            const bgDecorPhotos = document.querySelectorAll(".bg-decor-photo");
+
+            bgDecorPhotos.forEach((photo, idx) => {
+                const speed = 0.3 + idx * 0.05;
+                const yPos = -(scrollPosition * speed);
+                photo.style.transform = `translateY(${yPos}px)`;
+            });
+        }
+
+        // Анимация для стрелок скролла
+        function animateScrollArrows() {
+            const arrows = document.querySelectorAll(".scroll-arrow");
+            arrows.forEach((arrow) => {
+                arrow.style.animation = "bounce 1.5s infinite";
+            });
+
+            // Добавляем ключевые кадры для bounce
+            if (!document.querySelector("#bounceKeyframes")) {
+                const bounceStyle = document.createElement("style");
+                bounceStyle.id = "bounceKeyframes";
+                bounceStyle.textContent = `
+                    @keyframes bounce {
+                        0%, 100% {
+                            transform: translateY(0);
+                            opacity: 0.5;
+                        }
+                        50% {
+                            transform: translateY(10px);
+                            opacity: 0.8;
+                        }
+                    }
+                `;
+                document.head.appendChild(bounceStyle);
+            }
+        }
+
+        // Инициализация всех анимаций
+        function initAnimations() {
+            // Сначала применяем начальные стили
+            animateBackgroundElements();
+            animateHeadings();
+            animateScrollArrows();
+
+            // Запускаем проверку видимости при загрузке
+            setTimeout(() => {
+                animateOnScroll();
+            }, 100);
+
+            // Добавляем обработчик скролла с throttle для оптимизации
+            let ticking = false;
+            window.addEventListener("scroll", function () {
+                if (!ticking) {
+                    requestAnimationFrame(function () {
+                        animateOnScroll();
+                        parallaxBackground();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // Добавляем обработчик resize
+            window.addEventListener("resize", function () {
+                animateOnScroll();
+            });
+        }
+
+        // Запускаем инициализацию
+        initAnimations();
+
+        // Добавляем эффект при загрузке страницы
+        window.addEventListener("load", function () {
+            document.body.classList.add("loaded");
+            animateOnScroll();
+
+            // Показываем приветственный блок с анимацией
+            const greeting = document.querySelector(".greeting-block");
+            if (greeting) {
+                greeting.style.opacity = "0";
+                greeting.style.transform = "scale(0.8)";
+                setTimeout(() => {
+                    greeting.style.transition = "all 0.6s ease";
+                    greeting.style.opacity = "1";
+                    greeting.style.transform = "scale(1)";
+                }, 300);
+            }
+        });
+
+        // Эффект наведения для карточек
+        const cards = document.querySelectorAll(".card-bw");
+        cards.forEach((card) => {
+            card.addEventListener("mouseenter", function () {
+                this.style.transform = "translateY(-5px)";
+            });
+            card.addEventListener("mouseleave", function () {
+                this.style.transform = "translateY(0)";
+            });
+        });
+    });
+})();

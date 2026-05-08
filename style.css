@@ -45,9 +45,6 @@ body {
 .bg-image-2 {
     background-image: url("https://images.unsplash.com/photo-1519741347683-2c3a6df9b5e7?q=80&w=2070&auto=format");
 }
-.bg-image-3 {
-    background-image: url("https://images.unsplash.com/photo-1606089082290-1fd0a5bfdd1e?q=80&w=2070&auto=format");
-}
 
 /* Контейнер */
 .container {
@@ -107,47 +104,6 @@ body {
     border-radius: 40px;
     margin-bottom: 1rem;
     color: #2c2c2c;
-}
-
-/* Плавающие фото в hero */
-.floating-photo {
-    position: absolute;
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-    border: 2px solid #ffffff;
-    transition: all 0.3s ease;
-    filter: grayscale(0.7);
-}
-
-.floating-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: filter 0.3s;
-}
-
-.floating-photo:hover {
-    filter: grayscale(0);
-    transform: scale(1.05);
-}
-
-.floating-photo-left {
-    left: 5%;
-    top: 8%;
-}
-.floating-photo-right {
-    right: 5%;
-    top: 8%;
-}
-
-@media (max-width: 640px) {
-    .floating-photo {
-        width: 60px;
-        height: 60px;
-    }
 }
 
 /* Блок с фоновым фото */
@@ -237,33 +193,6 @@ h2 {
     font-weight: 400;
 }
 
-/* Галерея */
-.gallery-grid {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin: 1.5rem 0;
-}
-
-.photo-card {
-    background: #fff;
-    border-radius: 24px;
-    padding: 1rem;
-    width: 200px;
-    text-align: center;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
-    border: 1px solid #eaeaea;
-}
-
-.photo-placeholder {
-    background: #f2f2f2;
-    border-radius: 20px;
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #3f3f3f;
-}
-
 /* Таймер */
 .timer-section {
     text-align: center;
@@ -305,43 +234,6 @@ h2 {
     margin-top: 1rem;
     font-size: 0.9rem;
     color: #5a5a5a;
-}
-
-/* Кнопки */
-.rsvp-btn,
-.send-wish-btn {
-    background: #1e1e1e;
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 60px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 100%;
-    max-width: 320px;
-    display: inline-block;
-    margin: 0.5rem auto;
-    letter-spacing: 0.5px;
-}
-
-.rsvp-btn:hover,
-.send-wish-btn:hover {
-    background: #000000;
-    transform: scale(0.98);
-}
-
-.wish-input {
-    width: 100%;
-    padding: 1rem;
-    font-family: "Inter", sans-serif;
-    border-radius: 28px;
-    border: 1px solid #ccc;
-    background: rgba(255, 255, 255, 0.9);
-    margin: 1rem 0;
-    resize: vertical;
-    font-size: 1rem;
 }
 
 footer {
@@ -405,173 +297,6 @@ footer {
     font-weight: 400;
 }
 
-/* Стили для декоративных фото по всей странице */
-.decor-photo {
-    position: absolute;
-    width: 140px;
-    height: 140px;
-    border-radius: 20px;
-    overflow: hidden;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    transition: all 0.4s ease;
-    z-index: 1;
-    filter: grayscale(0.6);
-}
-
-.decor-photo:hover {
-    filter: grayscale(0);
-    transform: scale(1.05) rotate(0deg) !important;
-    z-index: 10;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
-.decor-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 0.85;
-        transform: translateY(0);
-    }
-}
-
-/* Разные позиции и вращения для декоративных фото */
-.decor-photo-1 {
-    top: 8%;
-    left: -60px;
-    transform: rotate(-5deg);
-    animation-delay: 0.2s;
-}
-.decor-photo-2 {
-    top: 25%;
-    right: -70px;
-    transform: rotate(8deg);
-    animation-delay: 0.4s;
-}
-.decor-photo-3 {
-    bottom: 15%;
-    left: -50px;
-    transform: rotate(-3deg);
-    animation-delay: 0.6s;
-}
-.decor-photo-4 {
-    bottom: 40%;
-    right: -65px;
-    transform: rotate(6deg);
-    animation-delay: 0.8s;
-}
-.decor-photo-5 {
-    top: 50%;
-    left: -55px;
-    transform: rotate(-7deg);
-    animation-delay: 1s;
-}
-.decor-photo-6 {
-    top: 70%;
-    right: -60px;
-    transform: rotate(4deg);
-    animation-delay: 1.2s;
-}
-
-@media (max-width: 768px) {
-    .decor-photo {
-        width: 90px;
-        height: 90px;
-        opacity: 0.7;
-    }
-    .decor-photo-1 {
-        left: -30px;
-    }
-    .decor-photo-2 {
-        right: -35px;
-    }
-    .decor-photo-3 {
-        left: -25px;
-    }
-    .decor-photo-4 {
-        right: -30px;
-    }
-    .decor-photo-5 {
-        left: -28px;
-    }
-    .decor-photo-6 {
-        right: -32px;
-    }
-}
-
-/* Стили для дополнительных фото в карточках */
-.inline-photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
-    margin: 1.5rem 0;
-}
-
-.inline-photo-item {
-    border-radius: 16px;
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-    filter: grayscale(0.5);
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.inline-photo-item:hover {
-    filter: grayscale(0);
-    transform: scale(1.02);
-}
-
-.inline-photo-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Стили для модального окна просмотра фото */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    cursor: pointer;
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
-    max-width: 90%;
-    max-height: 90%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 8px;
-}
-
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
 /* Стили для декоративных фоновых фото */
 .bg-decor-photo {
     position: fixed;
@@ -580,18 +305,11 @@ footer {
     border-radius: 50%;
     z-index: 0;
     pointer-events: none;
-    filter: grayscale(24%) blur(1px);
+    /* filter: grayscale(24%) blur(1px); */
     transition: opacity 0.5s ease;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-@media (max-width: 768px) {
-    /* .bg-decor-photo {
-        width: 180px;
-        height: 180px;
-    } */
 }
 
 /* Позиции для фоновых фото */
@@ -602,7 +320,7 @@ footer {
 }
 
 .bg-decor-2 {
-    bottom: 18%;
+    bottom: 9%;
     right: 20px;
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
 }
@@ -658,21 +376,186 @@ footer {
     animation-duration: 10s;
 }
 
-/* Плавающие фото в hero остаются */
-.floating-photo {
-    position: absolute;
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-    border: 2px solid #ffffff;
-    transition: all 0.3s ease;
-    filter: grayscale(0.7);
-    z-index: 5;
+@media (max-width: 640px) {
+    .bg-decor-photo {
+        width: 180px;
+        height: 180px;
+    }
 }
 
-/* Убираем старые декоративные фото, если были */
-.decor-photo {
-    display: none;
+/* Дополнительные стили для кнопок соцсетей и подтверждения */
+.rsvp-buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.social-rsvp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: #1e1e1e;
+    color: white;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-family: "Inter", sans-serif;
+    min-width: 140px;
+}
+
+.social-rsvp-btn:hover {
+    background: #000000;
+    transform: scale(0.98);
+}
+
+.social-rsvp-btn.telegram {
+    background: #0088cc;
+}
+.social-rsvp-btn.telegram:hover {
+    background: #006699;
+}
+
+.social-rsvp-btn.whatsapp {
+    background: #25d366;
+}
+.social-rsvp-btn.whatsapp:hover {
+    background: #128c7e;
+}
+
+.social-rsvp-btn.vk {
+    background: #4c75a3;
+}
+.social-rsvp-btn.vk:hover {
+    background: #3a5d80;
+}
+
+.social-rsvp-btn.call {
+    background: #34a853;
+}
+.social-rsvp-btn.call:hover {
+    background: #2c8e47;
+}
+
+.social-icon {
+    font-size: 1.3rem;
+    font-weight: normal;
+}
+
+@media (max-width: 640px) {
+    .social-rsvp-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        min-width: 120px;
+    }
+    .social-icon {
+        font-size: 1.1rem;
+    }
+}
+
+.info-text {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #5a5a5a;
+}
+
+/* Секция групповых чатов */
+.group-chats-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.group-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 1rem 0 0.8rem;
+    color: #3a3a3a;
+}
+
+.group-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.group-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-family: "Inter", sans-serif;
+}
+
+.group-btn:hover {
+    transform: scale(0.96);
+    background: #000;
+}
+
+.group-btn.telegram-group {
+    background: #0088cc;
+}
+.group-btn.whatsapp-group {
+    background: #25d366;
+}
+.group-btn.vk-group {
+    background: #4c75a3;
+}
+
+.call-buttons-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.call-person-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-family: "Inter", sans-serif;
+    min-width: 170px;
+}
+
+.call-person-btn:hover {
+    transform: scale(0.98);
+    filter: brightness(0.9);
+}
+
+.call-person-btn.groom {
+    background: #2c5f8a;
+}
+.call-person-btn.bride {
+    background: #8b5e6b;
 }
