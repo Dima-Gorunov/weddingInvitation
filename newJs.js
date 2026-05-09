@@ -97,9 +97,9 @@ function renderGreeting() {
     const guestData = getGuestFromURL();
     const greetingDiv = document.getElementById("guestGreeting");
     if (guestData) {
-        greetingDiv.innerHTML = `✨ ${formatGreeting(guestData.names)} ✨`;
+        greetingDiv.innerHTML = `${formatGreeting(guestData.names)}`;
     } else {
-        greetingDiv.innerHTML = `✨ Дорогие наши гости! ✨`;
+        greetingDiv.innerHTML = `Дорогие наши гости!`;
     }
 }
 
@@ -321,7 +321,7 @@ console.log("На странице используются ваши фото к
             } else if (el.classList.contains("photo-bg-block")) {
                 animationType = "fadeInScale";
             } else {
-                animationType = "fadeInUp";
+                // animationType = "fadeInUp";
             }
 
             el.setAttribute("data-animation", animationType);
@@ -361,6 +361,8 @@ console.log("На странице используются ваши фото к
             /* Анимация выезда слева */
             .scroll-animated.slideInLeft {
                 animation: slideInLeftAnim 0.7s ease forwards;
+                display:flex;
+                gap:10px;
             }
             
             /* Анимация с зумом */

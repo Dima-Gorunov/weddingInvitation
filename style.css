@@ -75,7 +75,7 @@ body {
 
 @media (max-width: 640px) {
     .wedding-names {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
 }
 
@@ -96,14 +96,14 @@ body {
 }
 
 .greeting-block {
-    font-size: 1.25rem;
-    font-weight: 400;
-    background: rgba(0, 0, 0, 0.02);
-    display: inline-block;
-    padding: 0.3rem 1.2rem;
-    border-radius: 40px;
-    margin-bottom: 1rem;
-    color: #2c2c2c;
+    transition: 0.6s;
+    font-family: "Playfair Display", serif;
+    font-size: 2.3rem;
+    font-weight: 500;
+    /* letter-spacing: -0.01em; */
+    color: #000000;
+    margin: 1rem 0 0.5rem;
+    line-height: 1.2;
 }
 
 /* Блок с фоновым фото */
