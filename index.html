@@ -182,6 +182,15 @@
                     font-size: 1.5rem;
                 }
             }
+            a,
+            button,
+            .scroll-arrow,
+            .tg-btn,
+            .max-btn,
+            .location-link {
+                -webkit-tap-highlight-color: transparent;
+                outline: none;
+            }
         </style>
     </head>
     <body>
@@ -345,61 +354,9 @@
         <div class="heart-scroll" id="heartScroll">
             <div class="heart-icon">❤️</div>
         </div>
-        <div class="scroll-tip" id="scrollTip">скролл наполняет сердце</div>
 
         <!-- Встроенная логика для таймера и анимации сердечка + обработка max:// (попытка открыть приложение, если установлено) -->
         <script>
-            // Таймер до 10 июля 2026 15:00
-            function updateWeddingTimer() {
-                const target = new Date(2026, 6, 10, 15, 0, 0);
-                const now = new Date();
-                const diff = target - now;
-
-                if (diff <= 0) {
-                    document.getElementById("days").innerText = "00";
-                    document.getElementById("hours").innerText = "00";
-                    document.getElementById("minutes").innerText = "00";
-                    document.getElementById("seconds").innerText = "00";
-                    return;
-                }
-
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % 86400000) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % 3600000) / (1000 * 60));
-                const seconds = Math.floor((diff % 60000) / 1000);
-
-                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-            }
-            updateWeddingTimer();
-            setInterval(updateWeddingTimer, 1000);
-
-            // Анимация сердечка при скролле (декоративная)
-            const heartElement = document.getElementById("heartScroll");
-            const tipElement = document.getElementById("scrollTip");
-            if (heartElement) {
-                window.addEventListener("scroll", function () {
-                    const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-                    let opacity = 0.5 + Math.min(scrollPercent * 0.6, 0.5);
-                    heartElement.style.opacity = opacity;
-                    heartElement.style.transform = `scale(${1 + scrollPercent * 0.3})`;
-                    if (tipElement) {
-                        tipElement.style.opacity = scrollPercent > 0.1 ? Math.max(0, 1 - scrollPercent * 2) : 0.7;
-                    }
-                });
-                window.dispatchEvent(new Event("scroll"));
-            }
-
-            // плавный скролл по стрелкам
-            document.querySelectorAll(".scroll-arrow").forEach((arrow) => {
-                arrow.addEventListener("click", function (e) {
-                    e.stopPropagation();
-                    window.scrollBy({ top: 500, behavior: "smooth" });
-                });
-            });
-
             // Дополнительная логика для MAX: пробуем открыть через deep link max://, если веб-ссылка не срабатывает как надо.
             // Для максимального удобства: находим все кнопки с классом .max-btn и преобразуем href,
             // чтобы при клике пытаться открыть приложение max://, а если нет — то перейти на веб-профиль.
@@ -460,4 +417,3 @@
         <script src="buttons.js"></script>
     </body>
 </html>
-```
