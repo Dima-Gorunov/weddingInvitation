@@ -131,22 +131,48 @@ function updateTimer() {
 setInterval(updateTimer, 1000);
 updateTimer();
 
-// Сердце-скролл
-const heartScroll = document.getElementById("heartScroll");
-const scrollTip = document.getElementById("scrollTip");
+document.getElementById("heartScroll").addEventListener("click", function (e) {
+    // Количество сердечек во взрыве
+    const heartCount = 15;
 
-if (heartScroll) {
-    heartScroll.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-}
+    // Получаем координаты центра кнопки
+    const rect = this.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
 
-if (scrollTip) {
-    window.addEventListener("scroll", () => {
-        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        scrollTip.style.opacity = scrollPercent > 95 ? "0" : "1";
-    });
-}
+    for (let i = 0; i < heartCount; i++) {
+        // Создаем элемент сердечка
+        const heart = document.createElement("div");
+        heart.classList.add("particle-heart");
+        heart.innerHTML = "❤️";
+
+        // Позиционируем в центре кнопки
+        heart.style.left = centerX + "px";
+        heart.style.top = centerY + "px";
+
+        // Генерируем случайный угол и расстояние для разлета
+        const angle = Math.random() * Math.PI * 2; // Случайный угол в радианах
+        const distance = 40 + Math.random() * 80; // Расстояние разлета (от 40px до 120px)
+
+        // Вычисляем финальные координаты смещения
+        const tx = Math.cos(angle) * distance + "px";
+        const ty = Math.sin(angle) * distance + "px";
+        const rot = Math.random() * 60 - 30 + "deg"; // Случайный поворот
+
+        // Передаем переменные в CSS
+        heart.style.setProperty("--tx", tx);
+        heart.style.setProperty("--ty", ty);
+        heart.style.setProperty("--rot", rot);
+
+        // Добавляем на страницу
+        document.body.appendChild(heart);
+
+        // Удаляем элемент после завершения анимации (0.8 сек)
+        setTimeout(() => {
+            heart.remove();
+        }, 800);
+    }
+});
 
 // Смена фоновых изображений (Unsplash)
 const bgImages = document.querySelectorAll(".bg-image");
