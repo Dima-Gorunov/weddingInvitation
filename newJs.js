@@ -363,6 +363,7 @@ console.log("На странице используются ваши фото к
                 animation: slideInLeftAnim 0.7s ease forwards;
                 display:flex;
                 gap:10px;
+                justify-content: center;
             }
             
             /* Анимация с зумом */
